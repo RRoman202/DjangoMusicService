@@ -12,10 +12,13 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 
 def index(request):
     albums = Album.objects.all()
+    groups = Group.objects.all()
     context = {
         'albums': albums,
+        'groups': groups,
         'menu': menu,
-        'title': 'Главная страница'
+        'title': 'Главная страница',
+        'g_selected': 0
     }
     return render(request, 'music/index.html', context=context)
 

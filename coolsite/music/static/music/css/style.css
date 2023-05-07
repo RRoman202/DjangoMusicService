@@ -164,8 +164,8 @@ div.button {
 
 .left-chapters {
 	margin: 0;
-	background: #eee;
-	border-right: 1px solid #ccc;
+	background: #171616;
+	border-right: 3px solid #1077e6;
 	min-height: 100%;
 }
 .left-chapters ul {
@@ -367,6 +367,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 	font-family: Verdana, Geneva, Arial, Helvetica;
 	text-align: left;
 	overflow: hidden;
+	height: 100px;
 }
 #footer a {
 	text-decoration: underline;

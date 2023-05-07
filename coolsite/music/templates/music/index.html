@@ -5,9 +5,17 @@
 <ul>
     {% for p in albums %}
     <li>
+        {% if p.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        {% endif %}
         <h2>{{p.title}}</h2>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
+        {% for g in groups %}
+        {% if g.pk == p.group_id %}
+            <p>{{g.title}}</p>
+        {% endif %}
+        {% endfor %}
         <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
         <hr>
     </li>
