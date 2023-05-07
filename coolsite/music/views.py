@@ -25,10 +25,7 @@ def index(request):
 def about(request):
     return render(request, 'music/about.html', {'menu': menu, 'title': 'О сайте'})
 
-def genres(request, genid):
-    if(request.GET):
-        print(request.GET)
-    return HttpResponse(f"<h1>Музыка по жанрам</h1><p>{genid}</p>")
+
 
 def contact(request):
     return HttpResponseNotFound('Обратная связь')
@@ -52,10 +49,6 @@ def show_group(request, group_id):
     return HttpResponse(f'Отображение группы с id = {group_id}')
 
 
-def archive(request, year):
-    if(int(year) > 2023):
-        return redirect('home', permanent=True)
-    return HttpResponse(f"<h1>Музыка по годам</h1><p>{year}</p>")
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
