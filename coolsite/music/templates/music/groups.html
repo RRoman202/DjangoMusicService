@@ -5,6 +5,9 @@
 <ul>
     {% for p in groups %}
     <li>
+        {% if p.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        {% endif %}
         <h2>{{p.title}}</h2>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
