@@ -1,0 +1,16 @@
+{% extends 'music/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<ul>
+    {% for p in albums %}
+    <li>
+        <h2>{{p.title}}</h2>
+        <p>{{p.description | linebreaks | truncatewords:15}}</p>
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+        <hr>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
