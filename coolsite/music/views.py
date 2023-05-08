@@ -3,29 +3,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from .models import *
+from .utils import *
 
 
 
-menu = [{'title': "Альбомы", 'url_name': 'home'},
-        {'title': "Треки", 'url_name': 'tracks'},
-        {'title': "Группы", 'url_name': 'groups'},
-        {'title': "О сайте", 'url_name': 'about'},
-        {'title': "Войти", 'url_name': 'login'}
 
-]
-
-class MusicHome(ListView):
+class MusicHome(DataMixin, ListView):
     model = Album
     template_name = 'music/index.html'
     context_object_name = 'albums'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'
-        context['menu'] = menu
-        context['g_selected'] = 0
-        context['groups'] = Group.objects.all()
-        return context
+        c_def = self.get_user_context(title="Альбомы")
+        return dict(list(context.items()) + list(c_def.items()))
 
 def about(request):
     return render(request, 'music/about.html', {'menu': menu, 'title': 'О сайте'})
@@ -39,27 +30,15 @@ def login(request):
     return HttpResponseNotFound('Авторизация')
 
 
-class ShowAlbum(DetailView):
+class ShowAlbum(DataMixin, DetailView):
     model = Album
     template_name = 'music/album.html'
     slug_url_kwarg = 'album_slug'
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['album']
-        context['menu'] = menu
-        return context
+        c_def = self.get_user_context(title=context['album'])
+        return dict(list(context.items()) + list(c_def.items()))
 
-
-# def show_album(request, album_slug):
-#     album = get_object_or_404(Album, slug=album_slug)
-#
-#     context = {
-#         'album': album,
-#         'menu': menu,
-#         'title': album.title,
-#         'g_selected': album.group_id
-#     }
-#     return render(request, 'music/album.html', context=context)
 
 def groups(request):
     groups = Group.objects.all()
@@ -70,7 +49,7 @@ def groups(request):
     }
     return render(request, 'music/groups.html', context=context)
 
-class MusicTrack(ListView):
+class MusicTrack(DataMixin, ListView):
     model = Track
     template_name = 'music/tracks.html'
     context_object_name = 'tracks'
@@ -78,21 +57,24 @@ class MusicTrack(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Все треки'
-        context['menu'] = menu
-        context['gen_selected'] = 0
-        context['groups'] = Group.objects.all()
-        context['albums'] = Album.objects.all()
-        return context
+        c_def = self.get_user_context(title='Все треки')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-def show_group(request, group_id):
-    return HttpResponse(f'Отображение группы с id = {group_id}')
+class ShowGroup(DataMixin, DetailView):
+    model = Group
+    template_name = 'music/group.html'
+    slug_url_kwarg = 'group_slug'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=context['group'])
+        return dict(list(context.items()) + list(c_def.items()))
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
-class MusicGenre(ListView):
+class MusicGenre(DataMixin, ListView):
     model = Track
     template_name = 'music/tracks.html'
     context_object_name = 'tracks'

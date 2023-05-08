@@ -8,7 +8,7 @@
         {% if p.photo %}
             <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
         {% endif %}
-        <h2>{{p.title}}</h2>
+        <p><h2>{{p.title}}</h2><h3>{{p.year}}</h3></p>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
         {% for g in groups %}

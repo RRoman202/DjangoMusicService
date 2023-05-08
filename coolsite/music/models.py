@@ -36,7 +36,7 @@ class Group(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('group', kwargs={'group_id': self.pk})
+        return reverse('group', kwargs={'group_slug': self.slug})
 
 class Track(models.Model):
     title = models.CharField(max_length=255)

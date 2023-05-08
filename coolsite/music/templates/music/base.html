@@ -43,7 +43,13 @@
 		{% else %}
 			<li><a href="{% url 'tracks' %}">Все треки</a></li>
 		{% endif %}
-		{% show_genres '-title' gen_selected %}
+		{% for gen in genres %}
+    		{% if gen.pk == gen_selected %}
+        		<li class="selected">{{gen.title}}</li>
+    		{% else %}
+        		<li><a href="{{ gen.get_absolute_url }}">{{gen.title}}</a></li>
+    		{% endif %}
+		{% endfor %}
 	</ul>
 </td>
 
