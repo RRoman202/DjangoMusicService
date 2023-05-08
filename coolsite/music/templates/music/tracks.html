@@ -1,0 +1,28 @@
+{% extends 'music/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<ul>
+    {% for p in tracks %}
+    <li>
+        {% for al in albums %}
+            {% if al.pk == p.album_id %}
+                {% if al.photo %}
+                    <p><img class="img-article-left thumb" src="{{al.photo.url}}"></p>
+                {% endif %}
+                {% for g in groups %}
+                    {% if g.pk == al.group_id %}
+                        <p>{{g.title}}</p>
+                        <p>{{al.title}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <h2>{{p.title}}</h2>
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+        <hr>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

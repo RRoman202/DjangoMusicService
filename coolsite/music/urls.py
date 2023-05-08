@@ -8,6 +8,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('album/<int:album_id>/', show_album, name='album'),
     path('groups/', groups, name='groups'),
-    path('groups/group/<int:group_id>/', show_group, name='group')
+    path('groups/group/<int:group_id>/', show_group, name='group'),
+    path('tracks/', tracks, name='tracks'),
 
 ]

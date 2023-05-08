@@ -5,9 +5,12 @@ from .models import *
 
 
 
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Обратная связь", 'url_name': 'contact'},
+menu = [{'title': "Альбомы", 'url_name': 'home'},
+        {'title': "Треки", 'url_name': 'tracks'},
+        {'title': "Группы", 'url_name': 'groups'},
+        {'title': "О сайте", 'url_name': 'about'},
         {'title': "Войти", 'url_name': 'login'}
+
 ]
 
 def index(request):
@@ -44,6 +47,19 @@ def groups(request):
         'title': 'Группы'
     }
     return render(request, 'music/groups.html', context=context)
+
+def tracks(request):
+    tracks = Track.objects.all()
+    groups = Group.objects.all()
+    albums = Album.objects.all()
+    context = {
+        'groups': groups,
+        'tracks': tracks,
+        'albums': albums,
+        'menu': menu,
+        'title': 'Треки'
+    }
+    return render(request, 'music/tracks.html', context=context)
 
 def show_group(request, group_id):
     return HttpResponse(f'Отображение группы с id = {group_id}')
