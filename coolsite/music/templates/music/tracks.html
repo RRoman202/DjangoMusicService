@@ -1,10 +1,19 @@
 {% extends 'music/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
+{% if gen_selected == 0 %}
+    <h1>{{title}}</h1>
+{% else %}
+    {% for gen in genres %}
+        {% if gen.pk == gen_selected %}
+            <h1>{{gen.title}}</h1>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <ul>
     {% for p in tracks %}
     <li>
+
         {% for al in albums %}
             {% if al.pk == p.album_id %}
                 {% if al.photo %}

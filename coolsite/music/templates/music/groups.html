@@ -11,7 +11,7 @@
         <h2>{{p.title}}</h2>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
-        <p class="link-read-post"><a href="{{ p.get_absolute_url_groups }}">Подробнее</a></p>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
         <hr>
     </li>
     {% endfor %}
