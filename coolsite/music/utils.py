@@ -1,27 +1,32 @@
+from django.db.models import Count
 
 from .models import *
 
 menu = [{'title': "Альбомы", 'url_name': 'home'},
         {'title': "Треки", 'url_name': 'tracks'},
         {'title': "Группы", 'url_name': 'groups'},
-        {'title': "О сайте", 'url_name': 'about'},
-        {'title': "Войти", 'url_name': 'login'}
+        {'title': "Добавить группу", 'url_name': 'addgroup'},
 
 ]
 
 
 class DataMixin:
+        paginate_by = 5
         def get_user_context(self, **kwargs):
+
                 context = kwargs
+
+
                 genres = Genre.objects.all()
-                groups = Group.objects.all()
-                albums = Album.objects.all()
-                tracks = Track.objects.all()
-                context['menu'] = menu
+
+
+                user_menu = menu.copy()
+                if not self.request.user.is_authenticated:
+                        user_menu.pop(3)
+
+                context['menu'] = user_menu
                 context['genres'] = genres
-                context['albums'] = albums
-                context['groups'] = groups
-                context['tracks'] = tracks
+
                 if 'gen_selected' not in context:
                         context['gen_selected'] = 0
                 return context

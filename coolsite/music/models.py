@@ -17,26 +17,31 @@ class Album(models.Model):
     class Meta:
         verbose_name = 'Альбомы'
         verbose_name_plural = 'Альбомы'
-        ordering = ['time_create', 'title']
+        ordering = ['-time_create', 'title']
 
     def get_absolute_url(self):
         return reverse('album', kwargs={'album_slug': self.slug})
 
 class Group(models.Model):
-    title = models.CharField(max_length=255, db_index=True)
+    title = models.CharField(max_length=255, db_index=True, verbose_name="Название группы")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото")
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    description = models.TextField(blank=True)
-    is_published = models.BooleanField(default=True)
-    date_create = models.CharField(max_length=255)
+    description = models.TextField(blank=True, verbose_name="Описание")
+    is_published = models.BooleanField(default=True, verbose_name="Публикация")
+    date_create = models.CharField(max_length=255, verbose_name="Год основания")
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('group', kwargs={'group_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Группы'
+        verbose_name_plural = 'Группы'
+        ordering = ['-time_create', 'title']
 
 class Track(models.Model):
     title = models.CharField(max_length=255)
@@ -49,6 +54,11 @@ class Track(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'Треки'
+        verbose_name_plural = 'Треки'
+        ordering = ['-time_create', 'title']
 
 class Genre(models.Model):
     title = models.CharField(max_length=255)

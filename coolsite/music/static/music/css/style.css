@@ -82,9 +82,11 @@ ul.list-articles li {
 }
 
 .logo {
-	background: url('../images/logo.png') no-repeat 10px 5px;
-	width: 70px;
-	height: 60px;
+	background: url('../images/logo.png') no-repeat 15px;
+    background-size: 70%;
+    width: 80px;
+    height: 60px;
+
 }
 
 ul.mainmenu {
@@ -92,7 +94,7 @@ ul.mainmenu {
 	margin: 0;
 	padding: 0;
 	height: 60px;
-	color: #fdc073;
+	color: #1077e6;
 	font-size: 20px;
 	overflow: hidden;
 }
@@ -396,4 +398,42 @@ ul.lang-list li a:hover {color: #fdc073;}
 }
 li {
     list-style-type: none;
+}
+.list-pages {
+	text-align: center;
+	margin: 0 0 20px 0;
+}
+.list-pages ul {
+	margin: 20px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+.list-pages ul li {
+	display: inline-block;
+	margin: 0 20px 0 0;
+}
+.list-pages a {
+	color: #000;
+	font-size: 24px;
+	text-decoration: none;
+}
+.list-pages .page-num, .page-num-selected {
+	display: inline-block;
+	width: 60px;
+	height: 44px;
+	padding: 16px 0 0 0;
+	border: 1px solid #d0d0d0;
+	border-radius: 30px;
+}
+.list-pages .page-num:hover {
+	box-shadow: 3px 3px 1px #d0d0d0;
+}
+.list-pages .page-num-selected {
+
+	background: #1077e6;
+	color: #000;
+	font-size: 20px;
+}
+.list-pages .page-num-selected:hover {
+	box-shadow: none;
 }
