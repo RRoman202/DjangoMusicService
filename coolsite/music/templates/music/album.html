@@ -8,4 +8,28 @@
 {% endif %}
 
 {{album.description|linebreaks}}
+<hr>
+<h2>Список композиций</h2>
+<ul>
+    {% for t in tracks %}
+    <li>
+    {% if t.album_id == album.pk %}
+        {% if album.photo %}
+            <p><img class="img-article-left thumb" src="{{album.photo.url}}"></p>
+        {% endif %}
+        {% for g in groups %}
+            {% if g.pk == album.group_id %}
+                <p>{{g.title}}</p>
+                <p>{{album.title}}</p>
+                <h2>{{t.title}}</h2>
+                <div class="clear"></div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endfor %}
+    </li>
+</ul>
+
+
 {% endblock %}

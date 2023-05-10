@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'music.apps.MusicConfig',
+    'rest_framework',
 
 ]
 

@@ -21,8 +21,8 @@
                 {% endif %}
                 {% for g in groups %}
                     {% if g.pk == al.group_id %}
-                        <p>{{g.title}}</p>
-                        <p>{{al.title}}</p>
+                        <p class="geturl"><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
+                        <p class="geturl"><a href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
                     {% endif %}
                 {% endfor %}
             {% endif %}
