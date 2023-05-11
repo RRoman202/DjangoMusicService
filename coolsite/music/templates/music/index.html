@@ -8,12 +8,12 @@
         {% if p.photo %}
             <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
         {% endif %}
-        <p><h2>{{p.title}}</h2><h3>{{p.year}}</h3></p>
+        <p><h2><a href="{{ p.get_absolute_url }}">{{p.title}}</a></h2><h3>{{p.year}}</h3></p>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
         {% for g in groups %}
         {% if g.pk == p.group_id %}
-            <p>{{g.title}}</p>
+            <p><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
         {% endif %}
         {% endfor %}
         <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>

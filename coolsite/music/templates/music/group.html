@@ -1,6 +1,13 @@
 {% extends 'music/base.html' %}
-
+{% load hitcount_tags %}
 {% block content %}
+
+<div class="views-box">
+    <p>Просмотров:&nbsp;</p><pre></pre>
+
+    <p>{% get_hit_count for group %}</p>
+</div>
+
 <h1>{{group.title}}</h1>
 
 {% if group.photo %}
@@ -8,4 +15,24 @@
 {% endif %}
 
 {{group.description|linebreaks}}
+<h2>Список альбомов</h2>
+<ul>
+    {% for al in albums %}
+    <li>
+    {% if al.group_id == group.pk %}
+        {% if al.photo %}
+            <p><img class="img-article-left thumb" src="{{al.photo.url}}"></p>
+        {% endif %}
+        <p><a href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
+        <p><h3>{{al.year}}</h3></p>
+        <p><a href="{{ group.get_absolute_url }}">{{group.title}}</a></p>
+        <div class="clear"></div>
+         <p class="link-read-post"><a href="{{ al.get_absolute_url }}">Подробнее</a></p>
+        <hr>
+
+    {% endif %}
+
+    {% endfor %}
+    </li>
+</ul>
 {% endblock %}

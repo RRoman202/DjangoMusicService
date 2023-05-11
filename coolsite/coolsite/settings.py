@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'music.apps.MusicConfig',
     'rest_framework',
+    'hitcount',
 
 ]
 

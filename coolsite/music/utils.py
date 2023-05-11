@@ -13,20 +13,13 @@ menu = [{'title': "Альбомы", 'url_name': 'home'},
 class DataMixin:
         paginate_by = 5
         def get_user_context(self, **kwargs):
-
                 context = kwargs
-
-
                 genres = Genre.objects.all()
-
-
                 user_menu = menu.copy()
                 if not self.request.user.is_authenticated:
                         user_menu.pop(3)
-
                 context['menu'] = user_menu
                 context['genres'] = genres
-
                 if 'gen_selected' not in context:
                         context['gen_selected'] = 0
                 return context

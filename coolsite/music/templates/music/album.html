@@ -1,6 +1,13 @@
 {% extends 'music/base.html' %}
 
+{% load hitcount_tags %}
+
 {% block content %}
+<div class="views-box">
+    <p>Просмотров:&nbsp;</p><pre></pre>
+
+    <p>{% get_hit_count for album %}</p>
+</div>
 <h1>{{album.title}}</h1>
 
 {% if album.photo %}
@@ -19,7 +26,7 @@
         {% endif %}
         {% for g in groups %}
             {% if g.pk == album.group_id %}
-                <p>{{g.title}}</p>
+                <p><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
                 <p>{{album.title}}</p>
                 <h2>{{t.title}}</h2>
                 <div class="clear"></div>

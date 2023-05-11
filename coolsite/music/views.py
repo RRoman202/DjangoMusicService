@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
+from hitcount.views import HitCountDetailView
+
 from .forms import *
 from .models import *
 from .utils import *
@@ -22,6 +24,7 @@ class MusicHome(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['groups'] = Group.objects.all()
+
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -29,10 +32,11 @@ def contact(request):
     return HttpResponseNotFound('Обратная связь')
 
 
-class ShowAlbum(DataMixin, DetailView):
+class ShowAlbum(DataMixin, HitCountDetailView):
     model = Album
     template_name = 'music/album.html'
     slug_url_kwarg = 'album_slug'
+    count_hit = True
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tracks'] = Track.objects.all()
@@ -69,13 +73,14 @@ class MusicTrack(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class ShowGroup(DataMixin, DetailView):
+class ShowGroup(DataMixin, HitCountDetailView):
     model = Group
     template_name = 'music/group.html'
     slug_url_kwarg = 'group_slug'
-
+    count_hit = True
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['albums'] = Album.objects.all()
         c_def = self.get_user_context(title=context['group'])
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -87,7 +92,7 @@ class MusicGenre(DataMixin, ListView):
     model = Track
     template_name = 'music/tracks.html'
     context_object_name = 'tracks'
-    allow_empty = False
+    allow_empty = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
