@@ -1,12 +1,14 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db.models import Max
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
 from hitcount.views import HitCountDetailView
+from hitcount.models import *
 
 from .forms import *
 from .models import *
@@ -26,6 +28,19 @@ class MusicHome(DataMixin, ListView):
         context['groups'] = Group.objects.all()
 
         c_def = self.get_user_context(title="Альбомы")
+        return dict(list(context.items()) + list(c_def.items()))
+
+class MusicRecomendationAlbum(DataMixin, ListView):
+    model = Album
+    template_name = 'music/recomendation.html'
+    context_object_name = 'albums'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        context['hits'] = HitCount.objects.order_by('-hits')[0:3]
+
+        c_def = self.get_user_context(title="Популярные альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
 def contact(request):
@@ -100,7 +115,7 @@ class MusicGenre(DataMixin, ListView):
         context['title'] = str(g.title)
         user_menu = menu.copy()
         if not self.request.user.is_authenticated:
-            user_menu.pop(3)
+            user_menu.pop(4)
         context['menu'] = user_menu
         context['gen_selected'] = g.pk
 

@@ -13,5 +13,6 @@ urlpatterns = [
     path('groups/group/<slug:group_slug>/', ShowGroup.as_view(), name='group'),
     path('tracks/', MusicTrack.as_view(), name='tracks'),
     path('genre/<slug:genre_slug>/', MusicGenre.as_view(), name='genre'),
+    path('recs/', MusicRecomendationAlbum.as_view(), name='recs'),
 
 ]
