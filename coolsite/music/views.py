@@ -2,11 +2,11 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Max
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
-
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
+from django.core.cache import cache
 from hitcount.views import HitCountDetailView
 from hitcount.models import *
 
@@ -14,7 +14,7 @@ from .forms import *
 from .models import *
 from .utils import *
 
-
+import joblib
 
 
 class MusicHome(DataMixin, ListView):
@@ -115,7 +115,7 @@ class MusicGenre(DataMixin, ListView):
         context['title'] = str(g.title)
         user_menu = menu.copy()
         if not self.request.user.is_authenticated:
-            user_menu.pop(4)
+            user_menu.pop(5)
         context['menu'] = user_menu
         context['gen_selected'] = g.pk
 
@@ -168,6 +168,42 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def handle_uploaded_file(f):
+    model = joblib.load('music/model.pkl')
+
+    output = " "
+    for chunk in f.chunks():
+        output += chunk.decode('utf-8')
+    output = output.replace("\n", "").replace("\r", "")
+    print(model.predict([output]))
+    return model.predict([output])
+
+def upload_file(request):
+    user_menu = menu.copy()
+    if not request.user.is_authenticated:
+        user_menu.pop(5)
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            genre_pred = handle_uploaded_file(request.FILES["file"])
+            genre_pred = genre_pred[0]
+            cache.set('genre_pred', genre_pred)
+            return redirect('predresult')
+    else:
+        form = UploadFileForm()
+    return render(request, "music/pred.html", {"form": form, "menu": user_menu})
+
+class PredResult(DataMixin, TemplateView):
+    template_name = "music/predresult.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PredResult, self).get_context_data(*args, **kwargs)
+        c_def = self.get_user_context(title='Результат')
+
+        context['genre_pred'] = cache.get('genre_pred')
+        cache.delete('genre_pred')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 
