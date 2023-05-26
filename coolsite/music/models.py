@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from embed_video.fields import EmbedVideoField
 # Create your models here.
 class Album(models.Model):
     title = models.CharField(max_length=255)
@@ -60,6 +61,9 @@ class Track(models.Model):
         verbose_name_plural = 'Треки'
         ordering = ['-time_create', 'title']
 
+    def get_absolute_url(self):
+        return reverse('track', kwargs={'track_slug': self.slug})
+
 class Genre(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
@@ -72,3 +76,11 @@ class Genre(models.Model):
 
     def get_absolute_url(self):
         return reverse('genre', kwargs={'genre_slug': self.slug})
+
+class MusicVideo(models.Model):
+    title = models.CharField(max_length=255)
+    music_Video = EmbedVideoField()
+
+    class Meta:
+        verbose_name_plural = "Видео"
+

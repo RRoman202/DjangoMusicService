@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'music.apps.MusicConfig',
     'rest_framework',
     'hitcount',
+    'embed_video',
+
 
 ]
 

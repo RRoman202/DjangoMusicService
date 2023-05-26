@@ -16,4 +16,5 @@ urlpatterns = [
     path('recs/', MusicRecomendationAlbum.as_view(), name='recs'),
     path('pred/', upload_file, name='pred'),
     path('predresult/', PredResult.as_view(), name='predresult'),
+    path('track/<slug:track_slug>/', ShowTrack.as_view(), name='track'),
 ]

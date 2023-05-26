@@ -1,0 +1,17 @@
+{% extends 'music/base.html' %}
+
+{% block content %}
+{% load embed_video_tags %}
+
+<h1>{{track.title}}</h1>
+<div class="embedded-video">
+    {% video vid 'tiny' %}
+</div>
+{% if track.album.photo %}
+<p><img class="img-article-left" src="{{track.album.photo.url}}"></p>
+{% endif %}
+
+
+
+
+{% endblock %}

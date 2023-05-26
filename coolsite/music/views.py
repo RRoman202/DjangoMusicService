@@ -16,6 +16,10 @@ from .utils import *
 
 import joblib
 
+from django.http import JsonResponse
+
+
+
 
 class MusicHome(DataMixin, ListView):
     model = Album
@@ -56,7 +60,21 @@ class ShowAlbum(DataMixin, HitCountDetailView):
         context = super().get_context_data(**kwargs)
         context['tracks'] = Track.objects.all()
         context['groups'] = Group.objects.all()
+        context['vid'] = search_youtube(context['album'].group.title + context['album'].title)
+
         c_def = self.get_user_context(title=context['album'])
+        return dict(list(context.items()) + list(c_def.items()))
+
+class ShowTrack(DataMixin, DetailView):
+    model = Track
+    template_name = 'music/track.html'
+    slug_url_kwarg = 'track_slug'
+    count_hit = True
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vid'] = search_youtube(context['track'].album.group.title + context['track'].title)
+
+        c_def = self.get_user_context(title=context['track'])
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -74,18 +92,24 @@ class MusicGroup(DataMixin, ListView):
 
 class MusicTrack(DataMixin, ListView):
 
+    paginate_by = 10
     model = Track
     template_name = 'music/tracks.html'
     context_object_name = 'tracks'
     allow_empty = False
 
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['albums'] = Album.objects.all()
         context['groups'] = Group.objects.all()
+
         c_def = self.get_user_context(title='Все треки')
 
         return dict(list(context.items()) + list(c_def.items()))
+    def form_valid(self, form):
+
+        return redirect('home')
 
 
 class ShowGroup(DataMixin, HitCountDetailView):

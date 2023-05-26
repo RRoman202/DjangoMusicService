@@ -31,6 +31,18 @@ img.img-article-left.thumb {
 	height: auto;
 }
 
+img.img-article-left-tracks {
+	max-width: 100px;
+	height: auto;
+	float: left;
+	padding: 0 10px 10px 0;
+}
+
+img.img-article-left-tracks.thumb {
+	max-width: 100px;
+	height: auto;
+}
+
 p.link-read-post {
 	text-align: right;
 }
@@ -466,4 +478,11 @@ li {
 .views-box{
     display: flex;
     justify-content: flex-start;
+}
+.embedded-video{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+
+
 }

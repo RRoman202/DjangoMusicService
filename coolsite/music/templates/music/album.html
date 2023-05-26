@@ -1,16 +1,20 @@
 {% extends 'music/base.html' %}
 
 {% load hitcount_tags %}
-
+{% load vid_tags %}
 {% block content %}
-
+{% load embed_video_tags %}
 <div class="views-box">
     <p>Просмотров:&nbsp;</p><pre></pre>
 
     <p>{% get_hit_count for album %}</p>
 </div>
 <h1>{{album.title}}</h1>
+<div class="embedded-video">
 
+    {% video vid 'tiny' %}
+
+</div>
 {% if album.photo %}
 <p><img class="img-article-left" src="{{album.photo.url}}"></p>
 {% endif %}
@@ -23,13 +27,13 @@
     <li>
     {% if t.album_id == album.pk %}
         {% if album.photo %}
-            <p><img class="img-article-left thumb" src="{{album.photo.url}}"></p>
+            <p><img class="img-article-left-tracks thumb" src="{{album.photo.url}}"></p>
         {% endif %}
         {% for g in groups %}
             {% if g.pk == album.group_id %}
                 <p><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
                 <p>{{album.title}}</p>
-                <h2>{{t.title}}</h2>
+                <h2><a href="{{ t.get_absolute_url }}">{{t.title}}</a></h2>
                 <div class="clear"></div>
                 <hr>
             {% endif %}

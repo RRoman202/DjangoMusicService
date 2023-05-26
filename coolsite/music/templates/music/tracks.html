@@ -1,4 +1,5 @@
 {% extends 'music/base.html' %}
+{% load embed_video_tags %}
 
 {% block content %}
 {% if gen_selected == 0 %}
@@ -13,11 +14,12 @@
 <ul>
     {% for p in tracks %}
     <li>
+        <form>
 
-        {% for al in albums %}
+            {% for al in albums %}
             {% if al.pk == p.album_id %}
                 {% if al.photo %}
-                    <p><img class="img-article-left thumb" src="{{al.photo.url}}"></p>
+                    <p><img class="img-article-left-tracks thumb" src="{{al.photo.url}}"></p>
                 {% endif %}
                 {% for g in groups %}
                     {% if g.pk == al.group_id %}
@@ -26,11 +28,13 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-        {% endfor %}
-        <h2>{{p.title}}</h2>
-        <div class="clear"></div>
+            {% endfor %}
+            <h2><a href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
+            <div class="clear"></div>
+            <button id="update-button">Слушать</button>
+            <hr>
+        </form>
 
-        <hr>
     </li>
     {% endfor %}
 </ul>

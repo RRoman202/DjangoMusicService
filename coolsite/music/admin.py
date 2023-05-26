@@ -1,4 +1,5 @@
 from django.contrib import admin
+from embed_video.admin import AdminVideoMixin
 
 
 from .models import *
@@ -19,6 +20,10 @@ class GenreAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     prepopulated_fields = {"slug": ("title",)}
 
+class MusicVideoAdmin(AdminVideoMixin, admin.ModelAdmin):
+    pass
+
+admin.site.register(MusicVideo, MusicVideoAdmin)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Track, TrackAdmin)
