@@ -4,6 +4,7 @@ from .models import *
 import json
 from typing import List, Tuple, Optional
 import re
+from bs4 import BeautifulSoup as bs
 
 # pip install dpath
 import dpath.util
@@ -57,7 +58,7 @@ def get_ytInitialData(url: str) -> Optional[dict]:
             return json.loads(data_str)
 
 
-def search_youtube(text_or_url: str) -> List[Tuple[str, str]]:
+def search_youtube(group, text_or_url: str) -> List[Tuple[str, str]]:
     if text_or_url.startswith('http'):
         url = text_or_url
     else:
@@ -68,6 +69,7 @@ def search_youtube(text_or_url: str) -> List[Tuple[str, str]]:
 
     data = get_ytInitialData(url)
 
+
     if not data:
         return items
 
@@ -75,7 +77,7 @@ def search_youtube(text_or_url: str) -> List[Tuple[str, str]]:
     if not videos:
         videos = dpath.util.values(data, '**/playlistVideoRenderer')
 
-    print(videos[0])
+    print(len(videos))
     for video in videos:
         if 'videoId' not in video:
             continue
@@ -87,6 +89,26 @@ def search_youtube(text_or_url: str) -> List[Tuple[str, str]]:
             title = dpath.util.get(video, 'title/simpleText')
 
         items.append((url, title))
+        break
+        # url = 'https://www.youtube.com/embed/' + video['videoId'] + '?wmode=opaque'
+        # pages = requests.get(url)
+        # soup = bs(pages.text, 'lxml')
+        #
+        # if 'UNPLAYABLE' in str(soup):
+        #     continue
+        # else:
+        #     url = 'https://www.youtube.com/watch?v=' + video['videoId']
+        #     try:
+        #         title = dpath.util.get(video, 'title/runs/0/text')
+        #     except KeyError:
+        #         title = dpath.util.get(video, 'title/simpleText')
+        #
+        #     if(str(title).startswith(group)):
+        #         items.append((url, title))
+        #         break
+        #     else:
+        #         continue
+
     return items[0][0]
 
 

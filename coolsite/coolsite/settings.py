@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-owq7@d3h_-wd487)u^w3)k*tre$d(s2f1iag8jc#44(5bt@)d4
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 # Application definition
 
@@ -138,3 +138,4 @@ MEDIA_URL = '/media/'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
