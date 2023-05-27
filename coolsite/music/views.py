@@ -34,6 +34,52 @@ class MusicHome(DataMixin, ListView):
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
+from django.db.models import Q
+class SearchResultsView(DataMixin, ListView):
+    model = Album
+    template_name = 'music/search_results.html'
+    context_object_name = 'albums'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+
+        c_def = self.get_user_context(title="Альбомы")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q')
+        object_list = Album.objects.filter(
+            Q(title__icontains=query)
+        )
+        return object_list
+
+class SearchResultsTrackView(DataMixin, ListView):
+    paginate_by = 10
+    model = Track
+    template_name = 'music/search_results_track.html'
+    context_object_name = 'tracks'
+    allow_empty = True
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['albums'] = Album.objects.all()
+        context['groups'] = Group.objects.all()
+
+        c_def = self.get_user_context(title='Все треки')
+
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        return redirect('home')
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q')
+        object_list = Track.objects.filter(
+            Q(title__icontains=query)
+        )
+        return object_list
+
 class MusicRecomendationAlbum(DataMixin, TemplateView):
 
     model = Album
@@ -97,7 +143,7 @@ class MusicTrack(DataMixin, ListView):
     model = Track
     template_name = 'music/tracks.html'
     context_object_name = 'tracks'
-    allow_empty = False
+    allow_empty = True
 
 
     def get_context_data(self, *, object_list=None, **kwargs):

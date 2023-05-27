@@ -17,4 +17,6 @@ urlpatterns = [
     path('pred/', upload_file, name='pred'),
     path('predresult/', PredResult.as_view(), name='predresult'),
     path('track/<slug:track_slug>/', ShowTrack.as_view(), name='track'),
+    path('search/', SearchResultsView.as_view(), name='search_results'),
+    path('searchtracks/', SearchResultsTrackView.as_view(), name='search_results_tracks'),
 ]

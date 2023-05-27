@@ -1,10 +1,10 @@
 {% extends 'music/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
-<form action="{% url 'search_results' %}" method="get">
+<h1>Альбомы</h1>
+<form ion="{% url 'search_results' %}" method="get">
   <input name="q" type="text" placeholder="Поиск...">
-    <input type="submit" value="Найти">
+  <input type="submit" value="Найти">
 </form>
 <ul>
     {% for p in albums %}
@@ -15,11 +15,8 @@
         <p><h2><a href="{{ p.get_absolute_url }}">{{p.title}}</a></h2><h3>{{p.year}}</h3></p>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
-        {% for g in groups %}
-        {% if g.pk == p.group_id %}
-            <p><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
-        {% endif %}
-        {% endfor %}
+        <p><a href="{{ g.get_absolute_url }}">{{p.group.title}}</a></p>
+
         <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
         <hr>
     </li>
