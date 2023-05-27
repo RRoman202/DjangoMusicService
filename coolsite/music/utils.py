@@ -47,7 +47,7 @@ PATTERNS = [
 session = requests.Session()
 session.headers['User-Agent'] = USER_AGENT
 
-
+#метод получения данных результата поиска видео
 def get_ytInitialData(url: str) -> Optional[dict]:
     rs = session.get(url)
 
@@ -58,6 +58,7 @@ def get_ytInitialData(url: str) -> Optional[dict]:
             return json.loads(data_str)
 
 
+#метод получения ссылок и загловков видео
 def search_youtube(group, text_or_url: str) -> List[Tuple[str, str]]:
     if text_or_url.startswith('http'):
         url = text_or_url
@@ -90,6 +91,7 @@ def search_youtube(group, text_or_url: str) -> List[Tuple[str, str]]:
 
         items.append((url, title))
         break
+
         # url = 'https://www.youtube.com/embed/' + video['videoId'] + '?wmode=opaque'
         # pages = requests.get(url)
         # soup = bs(pages.text, 'lxml')

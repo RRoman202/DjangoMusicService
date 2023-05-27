@@ -34,7 +34,7 @@ class MusicHome(DataMixin, ListView):
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
-class MusicRecomendationAlbum(DataMixin, ListView):
+class MusicRecomendationAlbum(DataMixin, TemplateView):
 
     model = Album
     template_name = 'music/recomendation.html'
@@ -44,7 +44,7 @@ class MusicRecomendationAlbum(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['groups'] = Group.objects.all()
         context['hits'] = HitCount.objects.order_by('-hits')[0:3]
-
+        context['albums'] = Album.objects.all()
         c_def = self.get_user_context(title="Популярные альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
