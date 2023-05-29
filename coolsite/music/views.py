@@ -49,10 +49,15 @@ class SearchResultsView(DataMixin, ListView):
 
     def get_queryset(self):  # новый
         query = self.request.GET.get('q')
-        object_list = Album.objects.filter(
-            Q(title__icontains=query)
-        )
-        return object_list
+        if query:
+            object_list = Album.objects.filter(
+                Q(title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Album.objects.all()
+
+            return object_list
 
 class SearchResultsTrackView(DataMixin, ListView):
     paginate_by = 10
@@ -74,11 +79,16 @@ class SearchResultsTrackView(DataMixin, ListView):
         return redirect('home')
 
     def get_queryset(self):  # новый
-        query = self.request.GET.get('q')
-        object_list = Track.objects.filter(
-            Q(title__icontains=query)
-        )
-        return object_list
+        query = self.request.GET.get('q', None)
+        if query:
+            object_list = Track.objects.filter(
+                Q(title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Track.objects.all()
+
+            return object_list
 
 class MusicRecomendationAlbum(DataMixin, TemplateView):
 

@@ -4,24 +4,41 @@
 {% load vid_tags %}
 {% block content %}
 {% load embed_video_tags %}
+<div class="blur-container">
+    <div class="blur-photo">
+    {% if album.photo %}
+    <img class="" src="{{album.photo.url}}">
+    {% endif %}
+    </div>
+</div>
+
 <div class="views-box">
     <p>Просмотров:&nbsp;</p><pre></pre>
-
     <p>{% get_hit_count for album %}</p>
+
 </div>
-<h1>{{album.title}}</h1>
+<h5>Дата добавления: <span>{{album.time_create}}</span></h5>
+<div class="info-block">
+    <h1>{{album.title}}<span>(</span><span>{{album.year}}</span><span>)</span><span>  </span><span><a href="{{ album.group.get_absolute_url }}">{{album.group.title}}</a></span></h1>
+</div>
+
+
 <div class="embedded-video">
 
     {% video vid 'tiny' %}
 
 </div>
-{% if album.photo %}
-<p><img class="img-article-left" src="{{album.photo.url}}"></p>
-{% endif %}
+<div class="content-block">
+    {% if album.photo %}
+    <p><img class="img-article-left" src="{{album.photo.url}}"></p>
+    {% endif %}
 
-{{album.description|linebreaks}}
-<hr>
-<h2>Список композиций</h2>
+    {{album.description|linebreaks}}
+
+</div>
+
+<div class="content-block">
+    <h2>Список композиций</h2>
 <ul>
     {% for t in tracks %}
     <li>
@@ -35,13 +52,15 @@
                 <p>{{album.title}}</p>
                 <h2><a href="{{ t.get_absolute_url }}">{{t.title}}</a></h2>
                 <div class="clear"></div>
-                <hr>
+
             {% endif %}
         {% endfor %}
     {% endif %}
     {% endfor %}
     </li>
 </ul>
+</div>
+
 
 
 {% endblock %}
