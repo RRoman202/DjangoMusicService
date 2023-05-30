@@ -6,6 +6,7 @@ html, body {
 	width: 100%;
 	color: #1077e6;
 	background: #696969;
+
 }
 
 a {
@@ -210,18 +211,23 @@ div.button {
 	background: #171616;
 	border-right: 3px solid #1077e6;
 	min-height: 100%;
+	overflow: auto;
+
 }
 .left-chapters ul {
 	width: 230px;
-	min-height: 100%;
+
 	margin: 0;
 	padding: 20px 10px 10px 20px;
 	list-style: none;
 	font-size: 20px;
+
+
 }
 .left-chapters ul li {
 	margin: 30px 0 0 0;
 	color: #999;
+
 }
 .left-chapters ul li.selected {color: #0059b2; }
 .left-chapters ul li a {
@@ -242,7 +248,9 @@ div.button {
 	padding: 40px 20px 20px 40px;
 	width: 100%;
 	box-sizing: border-box;
-    z-index: 100;
+	background: #292929;
+
+
 
 }
 
@@ -307,6 +315,7 @@ ul.content-table li a:hover {color: #F0711C;}
 	color: #dbdbdb;
 	font-size: 20px;
 	font-family: 'Montserrat', sans-serif;
+
 
 }
 .content-text h1 {font-size: 32px; color: #330ec7}
@@ -401,7 +410,7 @@ ul.lang-list li a:hover {color: #fdc073;}
 #footer {
 	box-sizing: border-box;
 
-	background: #3F4137;
+	background: #171616;;
 	padding: 5px;
 	color: #aaa;
 	font-size: 14px;
@@ -455,7 +464,7 @@ li {
 
 }
 .list-pages a {
-	color: #000;
+	color: white;
 	font-size: 24px;
 	text-decoration: none;
 }
@@ -473,7 +482,7 @@ li {
 .list-pages .page-num-selected {
 
 	background: #1077e6;
-	color: #000;
+	color: white;
 	font-size: 20px;
 }
 .list-pages .page-num-selected:hover {
@@ -483,6 +492,7 @@ li {
     display: flex;
     justify-content: flex-start;
     text-align: center;
+    z-index: 100;
 }
 .embedded-video{
     position: fixed;
@@ -567,7 +577,7 @@ li {
 .info-block{
     background: linear-gradient(280deg, #827a85, #6a686d, #898c8d, #747474);
     background-size: 800% 800%;
-
+    z-index: 100;
     -webkit-animation: AnimationName 30s ease infinite;
     -moz-animation: AnimationName 30s ease infinite;
     animation: AnimationName 30s ease infinite;
@@ -576,16 +586,10 @@ li {
     border-radius: 20px;
 }
 .content-block{
-    background: linear-gradient(280deg, #827a85, #6a686d, #898c8d, #747474);
-    background-size: 800% 800%;
+
     margin-top: 20px;
     margin-bottom: 20px;
-    -webkit-animation: AnimationName 30s ease infinite;
-    -moz-animation: AnimationName 30s ease infinite;
-    animation: AnimationName 30s ease infinite;
-    padding: 10px;
-    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.2);
-    border-radius: 20px;
+
 }
 @-webkit-keyframes AnimationName {
     0%{background-position:0% 50%}
@@ -612,18 +616,54 @@ li {
     -webkit-filter: blur(4px);
     position: center;
     top: 0;
-    right: 0;
+    right: 45%;
     z-index: -1;
+    max-height: 400px;
 }
 .blur-container{
     position: relative;
-    height: 30%;
-
+    width: 300;
+    height: 300;
+    max-height: 300px;
 }
 .blur-photo img{
-    height: 30%;
 
+    max-height: 300px;
+    width: 300;
+    height: 300;
 
-    width: 100%
+}
+.url-text{
+    color: white;
+    text-decoration: none;
+}
+.url-text:hover{
+    color: blue;
+    text-decoration: none;
+}
+::-webkit-scrollbar { /* 1 - скроллбар */
+    width: 15px;
+
+    background-color: black;
 }
 
+::-webkit-scrollbar-button { /* 2 - кнопка */
+
+}
+
+::-webkit-scrollbar-track { /* 3 - трек */
+}
+
+::-webkit-scrollbar-track-piece { /* 4 - видимая часть трека */
+}
+
+::-webkit-scrollbar-thumb { /* 5 - ползунок */
+    border-radius: 5px;
+    background-color: #1700b0;
+}
+
+::-webkit-scrollbar-corner { /* 6 - уголок */
+}
+
+::-webkit-resizer { /* 7 - изменение размеров */
+}

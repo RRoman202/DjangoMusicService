@@ -23,9 +23,9 @@
         {% if al.photo %}
             <p><img class="img-article-left thumb" src="{{al.photo.url}}"></p>
         {% endif %}
-        <p><a href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
+        <p><a class="url-text" href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
         <p><h3>{{al.year}}</h3></p>
-        <p><a href="{{ group.get_absolute_url }}">{{group.title}}</a></p>
+        <p><a class="url-text" href="{{ group.get_absolute_url }}">{{group.title}}</a></p>
         <div class="clear"></div>
          <p class="link-read-post"><a href="{{ al.get_absolute_url }}">Подробнее</a></p>
         <hr>

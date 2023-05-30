@@ -19,7 +19,7 @@
 </div>
 <h5>Дата добавления: <span>{{album.time_create}}</span></h5>
 <div class="info-block">
-    <h1>{{album.title}}<span>(</span><span>{{album.year}}</span><span>)</span><span>  </span><span><a href="{{ album.group.get_absolute_url }}">{{album.group.title}}</a></span></h1>
+    <h1>{{album.title}}<span>(</span><span>{{album.year}}</span><span>)</span><span>  </span><span><a class="url-text" href="{{ album.group.get_absolute_url }}">{{album.group.title}}</a></span></h1>
 </div>
 
 
@@ -48,9 +48,9 @@
         {% endif %}
         {% for g in groups %}
             {% if g.pk == album.group_id %}
-                <p><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
+                <p><a class="url-text" href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
                 <p>{{album.title}}</p>
-                <h2><a href="{{ t.get_absolute_url }}">{{t.title}}</a></h2>
+                <h2><a class="url-text" href="{{ t.get_absolute_url }}">{{t.title}}</a></h2>
                 <div class="clear"></div>
 
             {% endif %}
