@@ -39,6 +39,7 @@
 
 <div class="content-block">
     <h2>Список композиций</h2>
+    <h3>Количество треков: <span>{{count_tracks}}</span></h3>
 <ul>
     {% for t in tracks %}
     <a href="{{ t.get_absolute_url }}"><li>

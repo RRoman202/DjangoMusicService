@@ -16,11 +16,12 @@
 <p><img class="img-article-left" src="{{track.album.photo.url}}"></p>
 {% endif %}
 <div class="content-block">
-    <h2>Может понравиться</h2>
+
 <ul>
+    <h2>Может понравиться:</h2>
     <li>
         {% for t in recs %}
-        <p><a class="url-text" href="{{ t.get_absolute_url }}">{{t.title}}</a></p>
+        <p><a class="url-text" href="{{ t.album.group.get_absolute_url }}">{{t.album.group.title}}</a><span> - </span><span><a class="url-text" href="{{ t.get_absolute_url }}">{{t.title}}</a></span></p>
         {% endfor %}
     </li>
 

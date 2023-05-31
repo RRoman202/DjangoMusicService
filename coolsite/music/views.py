@@ -49,9 +49,10 @@ class SearchResultsView(DataMixin, ListView):
 
     def get_queryset(self):  # новый
         query = self.request.GET.get('q')
+
         if query:
             object_list = Album.objects.filter(
-                Q(title__iregex=query)
+                Q(title__iregex=query) | Q(description__iregex=query) | Q(group__title__iregex=query)
             )
             return object_list
         else:
@@ -82,7 +83,7 @@ class SearchResultsTrackView(DataMixin, ListView):
         query = self.request.GET.get('q', None)
         if query:
             object_list = Track.objects.filter(
-                Q(title__iregex=query)
+                Q(title__iregex=query) | Q(album__title__iregex=query) | Q(album__group__title__iregex=query)
             )
             return object_list
         else:
@@ -118,7 +119,7 @@ class ShowAlbum(DataMixin, HitCountDetailView):
         context['tracks'] = Track.objects.all()
         context['groups'] = Group.objects.all()
         context['vid'] = search_youtube(context['album'].group.title, 'intitle:' + ''.join(context['album'].group.title) + '-' + ''.join(context['album'].title))
-
+        context['count_tracks'] = Track.objects.all().filter(album=context['album']).count()
         c_def = self.get_user_context(title=context['album'])
         return dict(list(context.items()) + list(c_def.items()))
 
