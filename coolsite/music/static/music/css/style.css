@@ -701,3 +701,7 @@ padding: 9px;
     box-shadow: none;
     border:none;
 }
+hr{
+    background: #116466;
+    height: 2px;
+}

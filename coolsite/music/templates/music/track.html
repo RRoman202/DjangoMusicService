@@ -15,7 +15,19 @@
 {% if track.album.photo %}
 <p><img class="img-article-left" src="{{track.album.photo.url}}"></p>
 {% endif %}
+<div class="content-block">
+    <h2>Может понравиться</h2>
+<ul>
+    <li>
+        {% for t in recs %}
+        <p><a class="url-text" href="{{ t.get_absolute_url }}">{{t.title}}</a></p>
+        {% endfor %}
+    </li>
 
+
+
+</ul>
+</div>
 
 
 

@@ -130,7 +130,7 @@ class ShowTrack(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vid'] = search_youtube(context['track'].album.group.title, 'intitle:' + ''.join(context['track'].album.group.title) + '-' + ''.join(context['track'].title))
-
+        context['recs'] = Track.objects.order_by('?').filter(genre=context['track'].genre)[0:3]
         c_def = self.get_user_context(title=context['track'])
         return dict(list(context.items()) + list(c_def.items()))
 
