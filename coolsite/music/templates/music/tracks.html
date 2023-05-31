@@ -12,8 +12,8 @@
     {% endfor %}
 {% endif %}
 <form action="{% url 'search_results_tracks' %}" method="get">
-  <input name="q" type="text" placeholder="Поиск...">
-    <input type="submit" value="Найти">
+  <input name="q" class="input-search" type="text" placeholder="Поиск...">
+    <input type="submit" value="Найти" class="input-submit">
 </form>
 <div class="content-block">
     <ul>

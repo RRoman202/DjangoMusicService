@@ -41,7 +41,7 @@
     <h2>Список композиций</h2>
 <ul>
     {% for t in tracks %}
-    <li>
+    <a href="{{ t.get_absolute_url }}"><li>
     {% if t.album_id == album.pk %}
         {% if album.photo %}
             <p><img class="img-article-left-tracks thumb" src="{{album.photo.url}}"></p>
@@ -49,7 +49,7 @@
         {% for g in groups %}
             {% if g.pk == album.group_id %}
                 <p><a class="url-text" href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
-                <p>{{album.title}}</p>
+                <p><a class="url-text" href="{{ album.get_absolute_url }}">{{album.title}}</a></p>
                 <h2><a class="url-text" href="{{ t.get_absolute_url }}">{{t.title}}</a></h2>
                 <div class="clear"></div>
 
@@ -58,6 +58,8 @@
     {% endif %}
     {% endfor %}
     </li>
+    </a>
+
 </ul>
 </div>
 

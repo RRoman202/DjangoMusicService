@@ -12,10 +12,11 @@
     {% endfor %}
 {% endif %}
 <form action="{% url 'search_results_tracks' %}" method="get">
-  <input name="q" type="text" placeholder="Поиск...">
-    <input type="submit" value="Найти">
+  <input name="q" type="text" class="input-search" placeholder="Поиск...">
+    <input type="submit" value="Найти" class="input-submit">
 </form>
-<ul>
+<div class="content-block">
+    <ul>
     {% for p in tracks %}
     <li>
         <form>
@@ -33,13 +34,15 @@
                 {% endfor %}
             {% endif %}
             {% endfor %}
-            <h2><a href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
+            <h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
             <div class="clear"></div>
             <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
-            <hr>
+
         </form>
 
     </li>
     {% endfor %}
 </ul>
+</div>
+
 {% endblock %}

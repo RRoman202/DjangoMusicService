@@ -51,8 +51,9 @@ p.link-read-post {
 }
 p.link-read-post a {
 	padding: 10px;
+
 	min-width: 100px;
-	background: #333671;
+	background: #33d8dd;
 	color: #fff;
 	text-decoration: none;
 }
@@ -98,7 +99,7 @@ ul.list-articles li {
 .clear {clear: both;}
 
 .header {
-	background: #171616;
+	background: #2C3531;
 	height: 60px;
 }
 
@@ -115,7 +116,7 @@ ul.mainmenu {
 	margin: 0;
 	padding: 0;
 	height: 60px;
-	color: #1077e6;
+	color: #D1E8E2;
 	font-size: 20px;
 	overflow: hidden;
 }
@@ -147,11 +148,11 @@ ul.mainmenu li.logo {margin: 0;}
 ul.mainmenu li.last {float: right;}
 
 ul.mainmenu li a {
-	color: #1f74cf;
+	color: #D1E8E2;
 	text-decoration: none;
 }
 ul.mainmenu li a:hover {
-	color: #007bff;
+	color: #33d8dd;
 
 }
 
@@ -208,7 +209,7 @@ div.button {
 
 .left-chapters {
 	margin: 0;
-	background: #171616;
+	background: #2C3531;
 	border-right: 3px solid #1077e6;
 	min-height: 100%;
 	overflow: auto;
@@ -226,15 +227,15 @@ div.button {
 }
 .left-chapters ul li {
 	margin: 30px 0 0 0;
-	color: #999;
+	color: #D1E8E2;
 
 }
-.left-chapters ul li.selected {color: #0059b2; }
+.left-chapters ul li.selected {color: #33d8dd; }
 .left-chapters ul li a {
-	color: #777;
+	color: #D1E8E2;
 	text-decoration: none;
 }
-.left-chapters ul li a:hover { color: #007bff; }
+.left-chapters ul li a:hover { color: #33d8dd; }
 .left-chapters ul li.share {margin: 60px 0 0 0;}
 .left-chapters ul li.share p {margin: 30px 0 30px 0;}
 .left-chapters ul li.share a {
@@ -245,10 +246,10 @@ div.button {
 }
 
 .content {
-	padding: 40px 20px 20px 40px;
+	padding: 20px 40px 20px 20px;
 	width: 100%;
 	box-sizing: border-box;
-	background: #292929;
+	background: white;
 
 
 
@@ -311,14 +312,14 @@ ul.content-table li a {
 ul.content-table li a:hover {color: #F0711C;}
 
 .content-text {
-	margin: 60px 0 0 30px;
-	color: #dbdbdb;
+
+	color: black;
 	font-size: 20px;
 	font-family: 'Montserrat', sans-serif;
 
 
 }
-.content-text h1 {font-size: 32px; color: #330ec7}
+.content-text h1 {font-size: 32px; color: #20b9be}
 
 
 ul.lang-list {
@@ -338,7 +339,7 @@ ul.lang-list li {
 	display: inline-block;
 	margin-left: 40px;
 }
-ul.lang-list li.selected {color: #fdc073; border-bottom: 1px solid #fdc073;}
+ul.lang-list li.selected {color: #6363ff; border-bottom: 1px solid #fdc073;}
 ul.lang-list li a {
     list-style: none;
 	color: #eee;
@@ -464,7 +465,7 @@ li {
 
 }
 .list-pages a {
-	color: white;
+	color: black;
 	font-size: 24px;
 	text-decoration: none;
 }
@@ -482,7 +483,7 @@ li {
 .list-pages .page-num-selected {
 
 	background: #1077e6;
-	color: white;
+	color: black;
 	font-size: 20px;
 }
 .list-pages .page-num-selected:hover {
@@ -575,15 +576,18 @@ li {
 }
 
 .info-block{
-    background: linear-gradient(280deg, #827a85, #6a686d, #898c8d, #747474);
-    background-size: 800% 800%;
+    background: #116466;
     z-index: 100;
-    -webkit-animation: AnimationName 30s ease infinite;
-    -moz-animation: AnimationName 30s ease infinite;
-    animation: AnimationName 30s ease infinite;
+
     padding: 10px;
     box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.2);
     border-radius: 20px;
+}
+.info-block h1{
+    color: white;
+}
+.info-block a{
+    color: white;
 }
 .content-block{
 
@@ -607,10 +611,11 @@ li {
     100%{background-position:0% 50%}
 }
 .content-block ul li{
-    background: #a3a2a2;
+    background: #116466;
     border-radius: 20px
 
 }
+
 .blur-photo{
     position: absolute;
     -webkit-filter: blur(4px);
@@ -634,17 +639,17 @@ li {
 
 }
 .url-text{
-    color: white;
+    color: black;
     text-decoration: none;
 }
 .url-text:hover{
-    color: blue;
+    color: #33d8dd;
     text-decoration: none;
 }
 ::-webkit-scrollbar { /* 1 - скроллбар */
     width: 15px;
 
-    background-color: black;
+    background-color: #2C3531;
 }
 
 ::-webkit-scrollbar-button { /* 2 - кнопка */
@@ -659,11 +664,40 @@ li {
 
 ::-webkit-scrollbar-thumb { /* 5 - ползунок */
     border-radius: 5px;
-    background-color: #1700b0;
+    background-color: #116466;
 }
 
 ::-webkit-scrollbar-corner { /* 6 - уголок */
 }
 
 ::-webkit-resizer { /* 7 - изменение размеров */
+}
+.input-search{
+padding: 9px;
+     font-size: 22px;
+     border-width: 1px;
+     border-color: #CCCCCC;
+     background-color: #FFFFFF;
+     color: #000000;
+     border-style: solid;
+     border-radius: 44px;
+     box-shadow: 0px 0px 6px rgba(66,66,66,.57);
+     text-shadow: 0px 0px 0px rgba(66,66,66,.56);
+}
+.input-submit{
+        border-radius:15px;
+        border:none;
+        padding:15px;
+        color: #121212;
+        background:white;
+        box-shadow: 5px 5px 10px -2px rgba(34, 60, 80, 0.2);
+        border: 2px solid black;
+}
+.input-submit:hover{
+    opacity:0.7;
+}
+
+.input-submit:active{
+    box-shadow: none;
+    border:none;
 }

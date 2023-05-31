@@ -3,19 +3,19 @@
 {% block content %}
 <h1>Альбомы</h1>
 <form ion="{% url 'search_results' %}" method="get">
-  <input name="q" type="text" placeholder="Поиск...">
-  <input type="submit" value="Найти">
+  <input name="q" class="input-search" type="text" placeholder="Поиск...">
+  <input type="submit" value="Найти" class="input-submit">
 </form>
 <ul>
     {% for p in albums %}
     <li>
         {% if p.photo %}
-            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+            <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
         {% endif %}
-        <p><h2><a href="{{ p.get_absolute_url }}">{{p.title}}</a></h2><h3>{{p.year}}</h3></p>
+        <p><h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2><h3>{{p.year}}</h3></p>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
         <div class="clear"></div>
-        <p><a href="{{ g.get_absolute_url }}">{{p.group.title}}</a></p>
+        <p><a class="url-text" href="{{ p.group.get_absolute_url }}">{{p.group.title}}</a></p>
 
         <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
         <hr>

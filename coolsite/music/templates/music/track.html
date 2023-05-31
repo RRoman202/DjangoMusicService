@@ -2,10 +2,13 @@
 
 {% block content %}
 {% load embed_video_tags %}
+<div class="info-block">
+    <h1><a class="url-text" href="{{ track.album.group.get_absolute_url }}">{{track.album.group.title}}</a> <span>-</span> <span>{{track.title}}</span></h1>
+    <h5><a class="url-text" href="{{ track.album.get_absolute_url }}">{{track.album.title}}</a></h5>
+    <h7>Жанр: <span><a class="url-text" href="{{ track.genre.get_absolute_url }}">{{track.genre.title}}</a></span></h7>
+</div>
 
-<h1><a class="url-text" href="{{ track.album.group.get_absolute_url }}">{{track.album.group.title}}</a> <span>-</span> <span>{{track.title}}</span></h1>
-<h5><a class="url-text" href="{{ track.album.get_absolute_url }}">{{track.album.title}}</a></h5>
-<h7>Жанр: <span>{{track.genre.title}}</span></h7>
+
 <div class="embedded-video">
     {% video vid 'tiny' %}
 </div>
