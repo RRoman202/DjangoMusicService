@@ -9,8 +9,11 @@
 </div>
 
 
-<div class="embedded-video">
+<button class="video-hide-btn" id="hider-button" onclick="myFunction()">Скрыть видео</button>
+<div class="embedded-video" id="video-block">
+
     {% video vid 'tiny' %}
+
 </div>
 {% if track.album.photo %}
 <p><img class="img-article-left" src="{{track.album.photo.url}}"></p>
@@ -29,7 +32,21 @@
 
 </ul>
 </div>
-
+<script>
+	function myFunction() {
+        var x = document.getElementById("video-block");
+        var b = document.getElementById("hider-button");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            b.innerText = 'Скрыть видео';
+            b.style.bottom = "320px";
+        } else {
+            x.style.display = "none";
+            b.innerText = 'Показать видео';
+            b.style.bottom = 0;
+    }
+}
+</script>
 
 
 {% endblock %}

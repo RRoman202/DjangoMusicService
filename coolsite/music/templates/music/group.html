@@ -21,7 +21,7 @@
     <li>
     {% if al.group_id == group.pk %}
         {% if al.photo %}
-            <p><img class="img-article-left thumb" src="{{al.photo.url}}"></p>
+            <a href="{{al.get_absolute_url}}"><img class="img-article-left thumb" src="{{al.photo.url}}"></a>
         {% endif %}
         <p><a class="url-text" href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
         <p><h3>{{al.year}}</h3></p>

@@ -22,8 +22,8 @@
     <h1>{{album.title}}<span>(</span><span>{{album.year}}</span><span>)</span><span>  </span><span><a class="url-text" href="{{ album.group.get_absolute_url }}">{{album.group.title}}</a></span></h1>
 </div>
 
-
-<div class="embedded-video">
+<button class="video-hide-btn" id="hider-button" onclick="myFunction()">Скрыть видео</button>
+<div class="embedded-video" id="video-block">
 
     {% video vid 'tiny' %}
 
@@ -45,7 +45,7 @@
     <a href="{{ t.get_absolute_url }}"><li>
     {% if t.album_id == album.pk %}
         {% if album.photo %}
-            <p><img class="img-article-left-tracks thumb" src="{{album.photo.url}}"></p>
+            <a href="{{t.get_absolute_url}}"><img class="img-article-left-tracks thumb" src="{{album.photo.url}}"></a>
         {% endif %}
         {% for g in groups %}
             {% if g.pk == album.group_id %}
@@ -63,7 +63,21 @@
 
 </ul>
 </div>
-
+<script>
+	function myFunction() {
+        var x = document.getElementById("video-block");
+        var b = document.getElementById("hider-button");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            b.innerText = 'Скрыть видео';
+            b.style.bottom = "320px";
+        } else {
+            x.style.display = "none";
+            b.innerText = 'Показать видео';
+            b.style.bottom = 0;
+    }
+}
+</script>
 
 
 {% endblock %}

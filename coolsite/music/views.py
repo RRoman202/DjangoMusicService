@@ -13,7 +13,7 @@ from hitcount.models import *
 from .forms import *
 from .models import *
 from .utils import *
-
+from django.db.models import Q
 import joblib
 
 from django.http import JsonResponse
@@ -34,7 +34,20 @@ class MusicHome(DataMixin, ListView):
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
-from django.db.models import Q
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q')
+
+        if query:
+            object_list = Album.objects.filter(
+                Q(title__iregex=query) | Q(group__title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Album.objects.all()
+
+            return object_list
+
+
 class SearchResultsView(DataMixin, ListView):
     model = Album
     template_name = 'music/search_results.html'
@@ -52,7 +65,7 @@ class SearchResultsView(DataMixin, ListView):
 
         if query:
             object_list = Album.objects.filter(
-                Q(title__iregex=query) | Q(description__iregex=query) | Q(group__title__iregex=query)
+                Q(title__iregex=query) | Q(group__title__iregex=query)
             )
             return object_list
         else:
@@ -168,6 +181,17 @@ class MusicTrack(DataMixin, ListView):
     def form_valid(self, form):
 
         return redirect('home')
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q', None)
+        if query:
+            object_list = Track.objects.filter(
+                Q(title__iregex=query) | Q(album__title__iregex=query) | Q(album__group__title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Track.objects.all()
+
+            return object_list
 
 
 class ShowGroup(DataMixin, HitCountDetailView):
@@ -205,8 +229,18 @@ class MusicGenre(DataMixin, ListView):
         context['albums'] = Album.objects.all()
         return context
 
-    def get_queryset(self):
-        return Track.objects.filter(genre__slug=self.kwargs['genre_slug'], is_published=True).select_related('genre')
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q', None)
+        if query:
+            object_list = Track.objects.filter(
+                Q(title__iregex=query) | Q(album__title__iregex=query) | Q(album__group__title__iregex=query)
+            )
+            return object_list.filter(genre__slug=self.kwargs['genre_slug'], is_published=True).select_related('genre')
+        else:
+            object_list = Track.objects.all()
+
+            return object_list.filter(genre__slug=self.kwargs['genre_slug'], is_published=True).select_related('genre')
 
 class AddGroup(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddGroupForm

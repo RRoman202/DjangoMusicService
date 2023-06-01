@@ -11,7 +11,7 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-<form action="{% url 'search_results_tracks' %}" method="get">
+<form method="get">
   <input name="q" class="input-search" type="text" placeholder="Поиск...">
     <input type="submit" value="Найти" class="input-submit">
 </form>
@@ -24,7 +24,7 @@
             {% for al in albums %}
             {% if al.pk == p.album_id %}
                 {% if al.photo %}
-                    <p><img class="img-article-left-tracks thumb" src="{{al.photo.url}}"></p>
+                    <a href="{{p.get_absolute_url}}"><img class="img-article-left-tracks thumb" src="{{al.photo.url}}"></a>
                 {% endif %}
                 {% for g in groups %}
                     {% if g.pk == al.group_id %}

@@ -250,6 +250,7 @@ div.button {
 	width: 100%;
 	box-sizing: border-box;
 	background: white;
+	position: relative;
 
 
 
@@ -482,8 +483,8 @@ li {
 }
 .list-pages .page-num-selected {
 
-	background: #1077e6;
-	color: black;
+	background: #116466;
+	color: white;
 	font-size: 20px;
 }
 .list-pages .page-num-selected:hover {
@@ -496,7 +497,10 @@ li {
     z-index: 100;
 }
 .embedded-video{
+    display: flex;
+    flex-direction: column;
     position: fixed;
+
     right: 0;
     bottom: 0;
 
@@ -612,7 +616,12 @@ li {
 }
 .content-block ul li{
     background: #116466;
+
     border-radius: 20px
+
+}
+.content-block ul li a{
+    color: white;
 
 }
 
@@ -704,4 +713,18 @@ padding: 9px;
 hr{
     background: #116466;
     height: 2px;
+}
+.video-hide-btn{
+    background: #116466;
+    color: white;
+    opacity: 1;
+    margin: 5px;
+    width: 10%;
+
+    position: fixed;
+
+    right: 0;
+    bottom: 320px;
+
+
 }
