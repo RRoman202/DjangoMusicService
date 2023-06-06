@@ -47,6 +47,21 @@ class MusicHome(DataMixin, ListView):
 
             return object_list
 
+class ProfileView(DataMixin, TemplateView):
+
+    template_name = 'music/profile.html'
+
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+
+        c_def = self.get_user_context(title="Профиль")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+
 
 class SearchResultsView(DataMixin, ListView):
     model = Album
@@ -150,15 +165,21 @@ class ShowTrack(DataMixin, DetailView):
 
 
 class MusicGroup(DataMixin, ListView):
-
+    paginate_by = 10
     model = Group
     template_name = 'music/groups.html'
     context_object_name = 'groups'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+
         c_def = self.get_user_context(title="Группы")
         return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):  # новый
+
+
+        return Group.objects.order_by('id')
 
 
 class MusicTrack(DataMixin, ListView):

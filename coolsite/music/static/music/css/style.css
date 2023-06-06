@@ -104,7 +104,7 @@ ul.list-articles li {
 }
 
 .logo {
-	background: url('../images/logo.png') no-repeat 15px;
+	background: url('../images/newlogo.svg') no-repeat 15px;
     background-size: 70%;
     width: 80px;
     height: 60px;
@@ -727,4 +727,8 @@ hr{
     bottom: 320px;
 
 
+}
+.profile-img{
+    display: flex;
+    flex-direction: column;
 }

@@ -25,7 +25,7 @@
 			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
 {% endfor %}
 			{% if request.user.is_authenticated %}
-			<li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+			<li class="last"><a href="{% url 'prof' %}">{{user.username}}</a> | <a href="{% url 'logout' %}">Выйти</a></li>
 			{% else %}
 			<li class="last"><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
@@ -76,7 +76,7 @@
 		{% endif %}
 		{% for p in paginator.page_range %}
 		{% if page_obj.number == p %}
-		<li class="page-num page-num-selected">{{ p }}</li>
+		<a href="?{% param_replace page=p %}"><li class="page-num page-num-selected">{{ p }}</li></a>
 		{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
 		<a href="?{% param_replace page=p %}"><li class="page-num">
 			<a href="?{% param_replace page=p %}">{{ p }}</a>
