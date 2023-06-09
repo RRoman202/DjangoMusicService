@@ -753,3 +753,16 @@ hr{
 .profile-info{
     margin-left: 20px;
 }
+
+.star-btn a{
+    padding: 10px;
+
+	min-width: 200px;
+	border-radius: 50px;
+	background: #33d8dd;
+	color: yellow;
+	text-decoration: none;
+}
+.star-btn:hover{
+    text: &#9733;
+}

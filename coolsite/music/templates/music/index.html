@@ -31,7 +31,7 @@
         {% endif %}
         {% endfor %}
         <p class="link-read-post"><a  href="{{ p.get_absolute_url }}">Подробнее</a></p>
-        <p class="link-read-post"><a  href="{{ p.get_absolute_url }}">В избранное</a></p>
+        <p class="star-btn"><a href="{{ p.get_absolute_url }}">&#9734;</a></p>
         <hr>
     </li>
     {% endfor %}
