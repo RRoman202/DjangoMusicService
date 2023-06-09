@@ -731,4 +731,25 @@ hr{
 .profile-img{
     display: flex;
     flex-direction: column;
+
+}
+.profile-img img{
+    max-width: 200px;
+    max-height: 200px;
+}
+.profile-block{
+    display: flex;
+    flex-direction: row;
+    background: #116466;
+    z-index: 100;
+
+    padding: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.2);
+    border-radius: 20px;
+}
+.profile-block p{
+    color: white;
+}
+.profile-info{
+    margin-left: 20px;
 }

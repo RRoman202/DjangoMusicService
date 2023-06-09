@@ -34,7 +34,7 @@ class MusicHome(DataMixin, ListView):
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
-    def get_queryset(self):  # новый
+    def get_queryset(self):
         query = self.request.GET.get('q')
 
         if query:
@@ -75,7 +75,7 @@ class SearchResultsView(DataMixin, ListView):
         c_def = self.get_user_context(title="Альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
-    def get_queryset(self):  # новый
+    def get_queryset(self):
         query = self.request.GET.get('q')
 
         if query:
@@ -107,7 +107,7 @@ class SearchResultsTrackView(DataMixin, ListView):
     def form_valid(self, form):
         return redirect('home')
 
-    def get_queryset(self):  # новый
+    def get_queryset(self):
         query = self.request.GET.get('q', None)
         if query:
             object_list = Track.objects.filter(
@@ -172,13 +172,22 @@ class MusicGroup(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        c_def = self.get_user_context(title="Группы")
+        context['is_url'] = False
+        c_def = self.get_user_context(title="Исполнители")
         return dict(list(context.items()) + list(c_def.items()))
 
-    def get_queryset(self):  # новый
+    def get_queryset(self):
 
+        query = self.request.GET.get('q', None)
+        if query:
+            object_list = Group.objects.order_by('id').filter(
+                Q(title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Group.objects.order_by('id')
 
+            return object_list
         return Group.objects.order_by('id')
 
 
@@ -202,7 +211,7 @@ class MusicTrack(DataMixin, ListView):
     def form_valid(self, form):
 
         return redirect('home')
-    def get_queryset(self):  # новый
+    def get_queryset(self):
         query = self.request.GET.get('q', None)
         if query:
             object_list = Track.objects.filter(
@@ -251,7 +260,7 @@ class MusicGenre(DataMixin, ListView):
         return context
 
 
-    def get_queryset(self):  # новый
+    def get_queryset(self):
         query = self.request.GET.get('q', None)
         if query:
             object_list = Track.objects.filter(

@@ -1,7 +1,8 @@
 {% extends 'music/base.html' %}
 {% load hitcount_tags %}
 {% block content %}
-
+{% load define_tag %}
+{% load music_tags %}
 <div class="views-box">
     <p>Просмотров:&nbsp;</p><pre></pre>
 
@@ -9,10 +10,14 @@
 </div>
 
 <h1>{{group.title}}</h1>
-
 {% if group.photo %}
-<p><img class="img-article-left" src="{{group.photo.url}}"></p>
-{% endif %}
+            {% getphoto urltext=group.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <p><img class="img-article-left" src="{{group.photo}}"></p>
+            {% else %}
+                <p><img class="img-article-left" src="{{group.photo.url}}"></p>
+            {% endif %}
+        {% endif %}
 
 {{group.description|linebreaks}}
 <h2>Список альбомов</h2>
@@ -20,9 +25,15 @@
     {% for al in albums %}
     <li>
     {% if al.group_id == group.pk %}
-        {% if al.photo %}
-            <a href="{{al.get_absolute_url}}"><img class="img-article-left thumb" src="{{al.photo.url}}"></a>
+         {% if al.photo %}
+            {% getphoto urltext=al.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ al.get_absolute_url }}"><img class="img-article-left thumb" src="{{al.photo}}"></a>
+            {% else %}
+                <a href="{{ al.get_absolute_url }}"><img class="img-article-left thumb" src="{{al.photo.url}}"></a>
+            {% endif %}
         {% endif %}
+
         <p><a class="url-text" href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
         <p><h3>{{al.year}}</h3></p>
         <p><a class="url-text" href="{{ group.get_absolute_url }}">{{group.title}}</a></p>

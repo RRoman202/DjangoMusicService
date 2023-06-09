@@ -19,6 +19,12 @@ def show_genres(sort=None, gen_selected=0):
 def get_albums():
     return Album.objects.all()
 
+@register.simple_tag(name='getphoto')
+def get_photo(urltext):
+    if 'https' in urltext:
+        return 'htp'
+    else:
+        return 'no'
 @register.simple_tag(takes_context=True)
 def param_replace(context, **kwargs):
     """

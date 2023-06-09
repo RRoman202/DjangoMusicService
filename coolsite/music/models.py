@@ -23,6 +23,9 @@ class Album(models.Model):
     def get_absolute_url(self):
         return reverse('album', kwargs={'album_slug': self.slug})
 
+    def album_as_list(self):
+        return self.photo.url.split('/')
+
 class Group(models.Model):
     title = models.CharField(max_length=255, db_index=True, verbose_name="Название группы")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
@@ -43,6 +46,9 @@ class Group(models.Model):
         verbose_name = 'Группы'
         verbose_name_plural = 'Группы'
         ordering = ['-time_create', 'title']
+
+    def group_as_list(self):
+        return self.photo.url.split('/')
 
 class Track(models.Model):
     title = models.CharField(max_length=255)

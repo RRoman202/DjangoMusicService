@@ -1,6 +1,7 @@
 {% extends 'music/base.html' %}
-
+{% load define_tag %}
 {% load hitcount_tags %}
+{% load music_tags %}
 {% load vid_tags %}
 {% block content %}
 {% load embed_video_tags %}
@@ -30,8 +31,14 @@
 </div>
 <div class="content-block">
     {% if album.photo %}
-    <p><img class="img-article-left" src="{{album.photo.url}}"></p>
-    {% endif %}
+            {% getphoto urltext=album.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <p><img class="img-article-left" src="{{album.photo}}"></p>
+            {% else %}
+                <p><img class="img-article-left" src="{{album.photo.url}}"></p>
+            {% endif %}
+        {% endif %}
+
 
     {{album.description|linebreaks}}
 

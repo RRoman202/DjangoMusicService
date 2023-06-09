@@ -1,12 +1,23 @@
 {% extends 'music/base.html' %}
-
+{% load define_tag %}
 {% block content %}
+{% load music_tags %}
 <h1>{{title}}</h1>
+<form method="get">
+  <input name="q" class="input-search" type="text" placeholder="Поиск...">
+    <input type="submit" value="Найти" class="input-submit">
+
+</form>
 <ul>
     {% for p in groups %}
     <li>
-        {% if p.photo %}
-            <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+       {% if p.photo %}
+            {% getphoto urltext=p.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo}}"></a>
+            {% else %}
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+            {% endif %}
         {% endif %}
         <h2>{{p.title}}</h2>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>

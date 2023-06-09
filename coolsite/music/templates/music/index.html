@@ -1,5 +1,6 @@
 {% extends 'music/base.html' %}
-
+{% load define_tag %}
+{% load music_tags %}
 {% block content %}
 <h1>{{title}}</h1>
 <form method="get">
@@ -11,8 +12,15 @@
 <ul>
     {% for p in albums %}
     <li>
+
+
         {% if p.photo %}
-            <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+            {% getphoto urltext=p.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo}}"></a>
+            {% else %}
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+            {% endif %}
         {% endif %}
         <p><h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2><h3>{{p.year}}</h3></p>
         <p>{{p.description | linebreaks | truncatewords:15}}</p>
@@ -23,6 +31,7 @@
         {% endif %}
         {% endfor %}
         <p class="link-read-post"><a  href="{{ p.get_absolute_url }}">Подробнее</a></p>
+        <p class="link-read-post"><a  href="{{ p.get_absolute_url }}">В избранное</a></p>
         <hr>
     </li>
     {% endfor %}
