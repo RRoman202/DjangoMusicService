@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'hitcount',
     'embed_video',
+    'users.apps.UsersConfig',
 
 
 ]
@@ -112,6 +113,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 TIME_ZONE = 'UTC'
 

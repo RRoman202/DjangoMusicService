@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from .models import *
 
+from users.models import CustomUser
+
 class AddGroupForm(forms.ModelForm):
     class Meta:
         model = Group
@@ -19,7 +21,7 @@ class RegisterUserForm(UserCreationForm):
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('username', 'email', 'password1', 'password2')
 
 
