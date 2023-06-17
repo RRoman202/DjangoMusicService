@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from .models import *
@@ -31,3 +31,6 @@ class LoginUserForm(AuthenticationForm):
 
 class UploadFileForm(forms.Form):
     file = forms.FileField(label='Текстовый файл', validators=[FileExtensionValidator(allowed_extensions=['txt'])])
+
+
+

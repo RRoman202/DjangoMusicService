@@ -22,6 +22,7 @@ from django.http import JsonResponse
 
 
 class MusicHome(DataMixin, ListView):
+
     model = Album
     template_name = 'music/index.html'
     context_object_name = 'albums'
@@ -120,6 +121,7 @@ class SearchResultsTrackView(DataMixin, ListView):
             return object_list
 
 class MusicRecomendationAlbum(DataMixin, TemplateView):
+
 
     model = Album
     template_name = 'music/recomendation.html'
@@ -314,6 +316,10 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def add_album_user(request):
+    request.user.albums_list.add(Album.objects.all()[1])
+    return redirect('home')
 
 def handle_uploaded_file(f):
     model = joblib.load('music/model.pkl')

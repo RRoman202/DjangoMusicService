@@ -1,3 +1,4 @@
+import requests
 from django import template
 from music.models import *
 
@@ -18,6 +19,8 @@ def show_genres(sort=None, gen_selected=0):
 @register.simple_tag(name='getal')
 def get_albums():
     return Album.objects.all()
+
+
 
 @register.simple_tag(name='getphoto')
 def get_photo(urltext):
