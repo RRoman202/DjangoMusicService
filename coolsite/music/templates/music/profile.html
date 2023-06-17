@@ -1,5 +1,5 @@
 {% extends 'music/base.html' %}
-
+{% load music_tags %}
 {% block content %}
 <h1>{{title}}</h1>
 <div class="profile-block">
@@ -10,6 +10,7 @@
     <div class="profile-info">
         <p>Дата регистрации: <span>{{user.date_joined}}</span></p>
         <p>Электронная почта: <span>{{user.email}}</span></p>
+
     </div>
 </div>
 <div class="albums-container">
@@ -17,25 +18,21 @@
         <h3>Избранные альбомы</h3>
     </div>
     <div class="albums">
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/51y7jG4mLzL._AC_SX522_.jpg" alt="Album Cover">
-   <h2>Random Access Memories</h2>
-   <p>Daft Punk</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/81QvC%2B1OGmL._AC_SL1500_.jpg" alt="Album Cover">
-   <h2>Back in Black</h2>
-   <p>AC/DC</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/71X9Sd%2B%2ByLL._AC_SL1200_.jpg" alt="Album Cover">
-   <h2>Thriller</h2>
-   <p>Michael Jackson</p>
-   <a href="#">Слушать</a>
-  </div>
-
+   {% for al in user.albums_list.all %}
+         <div class="album">
+            {% if al.photo %}
+            {% getphoto urltext=al.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ al.get_absolute_url }}"><img src="{{al.photo}}"></a>
+            {% else %}
+                <a href="{{ al.get_absolute_url }}"><img src="{{al.photo.url}}"></a>
+            {% endif %}
+            {% endif %}
+            <h2>{{al.title}}</h2>
+            <p><a href="{{al.group.get_absolute_url}}">{{al.group.title}}</a></p>
+            <a href="{{ al.get_absolute_url }}">Слушать</a>
+        </div>
+   {% endfor %}
 </div>
 </div>
 <div class="albums-container">
@@ -43,25 +40,22 @@
         <h3>Избранные исполнители</h3>
     </div>
     <div class="albums">
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/51y7jG4mLzL._AC_SX522_.jpg" alt="Album Cover">
-   <h2>Random Access Memories</h2>
-   <p>Daft Punk</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/81QvC%2B1OGmL._AC_SL1500_.jpg" alt="Album Cover">
-   <h2>Back in Black</h2>
-   <p>AC/DC</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/71X9Sd%2B%2ByLL._AC_SL1200_.jpg" alt="Album Cover">
-   <h2>Thriller</h2>
-   <p>Michael Jackson</p>
-   <a href="#">Слушать</a>
-  </div>
+   {% for gr in user.groups_list.all %}
+         <div class="album">
+            {% if gr.photo %}
+            {% getphoto urltext=gr.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ gr.get_absolute_url }}"><img src="{{gr.photo}}"></a>
+            {% else %}
+                <a href="{{ gr.get_absolute_url }}"><img src="{{gr.photo.url}}"></a>
+            {% endif %}
+            {% endif %}
+            <h2>{{gr.title}}</h2>
 
+            <a href="{{ gr.get_absolute_url }}">Слушать</a>
+        </div>
+   {% endfor %}
+    </div>
 </div>
 </div>
 <div class="albums-container">
@@ -69,24 +63,24 @@
         <h3>Избранные треки</h3>
     </div>
     <div class="albums">
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/51y7jG4mLzL._AC_SX522_.jpg" alt="Album Cover">
-   <h2>Random Access Memories</h2>
-   <p>Daft Punk</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/81QvC%2B1OGmL._AC_SL1500_.jpg" alt="Album Cover">
-   <h2>Back in Black</h2>
-   <p>AC/DC</p>
-   <a href="#">Слушать</a>
-  </div>
-  <div class="album">
-   <img src="https://images-na.ssl-images-amazon.com/images/I/71X9Sd%2B%2ByLL._AC_SL1200_.jpg" alt="Album Cover">
-   <h2>Thriller</h2>
-   <p>Michael Jackson</p>
-   <a href="#">Слушать</a>
-  </div>
+   <div class="albums">
+   {% for tr in user.tracks_list.all %}
+         <div class="album">
+            {% if tr.album.photo %}
+            {% getphoto urltext=tr.album.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href="{{ tr.get_absolute_url }}"><img src="{{tr.album.photo}}"></a>
+            {% else %}
+                <a href="{{ tr.get_absolute_url }}"><img src="{{tr.album.photo.url}}"></a>
+            {% endif %}
+            {% endif %}
+            <h2>{{tr.title}}</h2>
+            <p>{{tr.album.title}}</p>
+             <p>{{tr.album.group.title}}</p>
+            <a href="{{ tr.get_absolute_url }}">Слушать</a>
+        </div>
+   {% endfor %}
+    </div>
 
 </div>
 </div>
