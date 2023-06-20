@@ -22,6 +22,7 @@ def get_albums():
 
 
 
+
 @register.simple_tag(name='getphoto')
 def get_photo(urltext):
     if 'https' in urltext:

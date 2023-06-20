@@ -317,8 +317,9 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-def add_album_user(request):
-    request.user.albums_list.add(Album.objects.all()[1])
+def add_album_user(request, id):
+    album = Album.objects.get(id=id)
+    request.user.albums_list.add(album)
     return redirect('home')
 
 def handle_uploaded_file(f):
