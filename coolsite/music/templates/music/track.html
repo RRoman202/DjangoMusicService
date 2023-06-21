@@ -7,7 +7,13 @@
     <h5><a class="url-text" href="{{ track.album.get_absolute_url }}">{{track.album.title}}</a></h5>
     <h7>Жанр: <span><a class="url-text" href="{{ track.genre.get_absolute_url }}">{{track.genre.title}}</a></span></h7>
 </div>
+{% if track in user.tracks_list.all %}
 
+    <p class="link-read-post"><a href="/deletetrackuser/{{track.id}}">Убрать из избранных</a></p>
+{% else %}
+
+    <p class="link-read-post"><a href="/addtrackuser/{{track.id}}">Добавить в избранные</a></p>
+{% endif %}
 
 <button class="video-hide-btn" id="hider-button" onclick="myFunction()">Скрыть видео</button>
 <div class="embedded-video" id="video-block">

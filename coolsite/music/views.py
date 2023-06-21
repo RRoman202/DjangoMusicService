@@ -320,7 +320,32 @@ def logout_user(request):
 def add_album_user(request, id):
     album = Album.objects.get(id=id)
     request.user.albums_list.add(album)
-    return redirect('home')
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def delete_album_user(request, id):
+    album = Album.objects.get(id=id)
+    request.user.albums_list.remove(album)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def add_group_user(request, id):
+    group = Group.objects.get(id=id)
+    request.user.groups_list.add(group)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def delete_group_user(request, id):
+    group = Group.objects.get(id=id)
+    request.user.groups_list.remove(group)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def add_track_user(request, id):
+    track = Track.objects.get(id=id)
+    request.user.tracks_list.add(track)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def delete_track_user(request, id):
+    track = Track.objects.get(id=id)
+    request.user.tracks_list.remove(track)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def handle_uploaded_file(f):
     model = joblib.load('music/model.pkl')

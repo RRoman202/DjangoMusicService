@@ -34,6 +34,7 @@
         </div>
    {% endfor %}
 </div>
+    <button id="btn-add-album">Показать еще</button>
 </div>
 <div class="albums-container">
     <div class="albums-info">
@@ -41,7 +42,7 @@
     </div>
     <div class="albums">
    {% for gr in user.groups_list.all %}
-         <div class="album">
+         <div class="group">
             {% if gr.photo %}
             {% getphoto urltext=gr.photo.url as urlcheck %}
             {% if urlcheck == 'htp' %}
@@ -56,16 +57,16 @@
         </div>
    {% endfor %}
     </div>
+    <button id="btn-add-group">Показать еще</button>
 </div>
 </div>
 <div class="albums-container">
     <div class="albums-info">
         <h3>Избранные треки</h3>
     </div>
-    <div class="albums">
    <div class="albums">
    {% for tr in user.tracks_list.all %}
-         <div class="album">
+         <div class="track">
             {% if tr.album.photo %}
             {% getphoto urltext=tr.album.photo.url as urlcheck %}
             {% if urlcheck == 'htp' %}
@@ -81,8 +82,121 @@
         </div>
    {% endfor %}
     </div>
-
+    <button id="btn-add-track">Показать еще</button>
 </div>
 </div>
+<script>
+        window.onload = function () {
+        var box=document.getElementsByClassName('album');
+        var boxgroup=document.getElementsByClassName('group');
+        var btn=document.getElementById('btn-add-album');
+        var btngroup=document.getElementById('btn-add-group');
+        var boxtrack=document.getElementsByClassName('track');
+        var btntrack=document.getElementById('btn-add-track');
+        for (let i=3;i<box.length;i++) {
+            box[i].style.display = "none";
+        }
+        for (let i=3;i<boxgroup.length;i++) {
+            boxgroup[i].style.display = "none";
+        }
+        for (let i=3;i<boxtrack.length;i++) {
+            boxtrack[i].style.display = "none";
+        }
 
+        var countD = 3;
+        var countG = 3;
+        var countT = 3;
+        btn.addEventListener("click", function() {
+            var box=document.getElementsByClassName('album');
+            countD += 3;
+            if (countD <= box.length){
+                for(let i=0;i<countD;i++){
+                    box[i].style.display = "block";
+                }
+            }
+            else{
+                countD -= 3
+                countD += 2
+                if (countD <= box.length){
+                    for(let i=0;i<countD;i++){
+                        box[i].style.display = "block";
+                    }
+                }
+                else{
+                    countD -= 2
+                    countD += 1
+                    if (countD <= box.length){
+                        for(let i=0;i<countD;i++){
+                            box[i].style.display = "block";
+                        }
+                    }
+                }
+
+            }
+
+
+        })
+        btntrack.addEventListener("click", function() {
+            var boxtrack=document.getElementsByClassName('track');
+            countT += 3;
+            if (countT <= boxtrack.length){
+                for(let i=0;i<countT;i++){
+                    boxtrack[i].style.display = "block";
+                }
+            }
+            else{
+                countT -= 3
+                countT += 2
+                if (countT <= boxtrack.length){
+                    for(let i=0;i<countT;i++){
+                        boxtrack[i].style.display = "block";
+                    }
+                }
+                else{
+                    countT -= 2
+                    countT += 1
+                    if (countT <= boxtrack.length){
+                        for(let i=0;i<countT;i++){
+                            boxtrack[i].style.display = "block";
+                        }
+                    }
+                }
+
+            }
+
+
+        })
+        btngroup.addEventListener("click", function() {
+            var boxgroup=document.getElementsByClassName('group');
+            countG += 3;
+            if (countG <= boxgroup.length){
+                for(let i=0;i<countG;i++){
+                    boxgroup[i].style.display = "block";
+                }
+            }
+            else{
+                countG -= 3
+                countG += 2
+                if (countG <= boxgroup.length){
+                    for(let i=0;i<countG;i++){
+                        boxgroup[i].style.display = "block";
+                    }
+                }
+                else{
+                    countG -= 2
+                    countG += 1
+                    if (countG <= boxgroup.length){
+                        for(let i=0;i<countG;i++){
+                            boxgroup[i].style.display = "block";
+                        }
+                    }
+                }
+
+            }
+
+
+        })
+    }
+
+</script>
 {% endblock %}
