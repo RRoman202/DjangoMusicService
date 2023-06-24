@@ -10,3 +10,4 @@ class CustomUser(AbstractUser):
     albums_list = models.ManyToManyField(music.models.Album)
     groups_list = models.ManyToManyField(music.models.Group)
     tracks_list = models.ManyToManyField(music.models.Track)
+    playlists_list = models.ManyToManyField(music.models.Playlist)

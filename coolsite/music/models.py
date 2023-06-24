@@ -83,6 +83,24 @@ class Genre(models.Model):
     def get_absolute_url(self):
         return reverse('genre', kwargs={'genre_slug': self.slug})
 
+
+class Playlist(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
+    tracks_list = models.ManyToManyField(Track)
+    user_id = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('playlist', kwargs={'playlist_slug': self.slug})
+
+
+
 class MusicVideo(models.Model):
     title = models.CharField(max_length=255)
     music_Video = EmbedVideoField()
