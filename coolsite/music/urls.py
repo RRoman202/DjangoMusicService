@@ -16,6 +16,7 @@ urlpatterns = [
     path('deletetrackuser/<int:id>/', delete_track_user, name='deletetrack'),
     path('addtrackplaylist/<int:id_playlist>/<int:id_track>/', add_track_playlist, name='addtrackplaylist'),
     path('deletetrackplaylist/<int:id_playlist>/<int:id_track>/', delete_track_playlist, name='deletetrackplaylists'),
+    path('deleteplaylist/<int:id_playlist>/', delete_playlist, name='deleteplaylist'),
     path('register/', RegisterUser.as_view(), name='register'),
     path('album/<slug:album_slug>/', ShowAlbum.as_view(), name='album'),
     path('groups/', MusicGroup.as_view(), name='groups'),

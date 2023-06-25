@@ -35,13 +35,17 @@
                 {% endfor %}
             {% endif %}
             {% endfor %}
-            <h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
-            <div class="clear"></div>
-            {% if p in playlist.tracks_list.all %}
-                <p class="link-read-post"><a href="/deletetrackplaylist/{{playlist_id}}/{{p.id}}">Удалить из плейлиста</a></p>
-            {% else %}
-                <p class="link-read-post"><a href="/addtrackplaylist/{{playlist_id}}/{{p.id}}">Добавить в плейлист</a></p>
-            {% endif %}
+
+
+            <div class="tracks-info">
+                <p><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></p>
+                {% if p in playlist.tracks_list.all %}
+                    <p class="link-read-post"><a href="/deletetrackplaylist/{{playlist_id}}/{{p.id}}">Удалить из плейлиста</a></p>
+                {% else %}
+                    <p class="link-read-post"><a href="/addtrackplaylist/{{playlist_id}}/{{p.id}}">Добавить в плейлист</a></p>
+                {% endif %}
+            </div>
+
         </form>
 
     </li>

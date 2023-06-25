@@ -421,6 +421,11 @@ def delete_track_playlist(request, id_playlist, id_track):
 
     return redirect(request.META.get('HTTP_REFERER'))
 
+def delete_playlist(request, id_playlist):
+    Playlist.objects.get(id=id_playlist).delete()
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
 def add_album_user(request, id):
     album = Album.objects.get(id=id)
     request.user.albums_list.add(album)
