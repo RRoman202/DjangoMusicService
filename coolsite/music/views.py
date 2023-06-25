@@ -49,7 +49,7 @@ class MusicHome(DataMixin, ListView):
             return object_list
 
 class PlaylistView(DataMixin, ListView):
-
+    paginate_by = 10
     model = Playlist
     template_name = 'music/playlists.html'
     context_object_name = 'playlists'
@@ -251,6 +251,40 @@ class MusicTrack(DataMixin, ListView):
             object_list = Track.objects.all()
 
             return object_list
+class MusicTrackPlaylist(DataMixin, ListView):
+
+
+    paginate_by = 10
+    model = Track
+    template_name = 'music/addtracksinplaylist.html'
+    context_object_name = 'tracks'
+    allow_empty = True
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['albums'] = Album.objects.all()
+        context['groups'] = Group.objects.all()
+        context['playlist_id'] = cache.get('playlist_id')
+        context['playlist'] = Playlist.objects.get(id=cache.get('playlist_id'))
+
+        c_def = self.get_user_context(title='Добавление треков')
+
+        return dict(list(context.items()) + list(c_def.items()))
+    def form_valid(self, form):
+
+        return redirect('home')
+    def get_queryset(self):
+        query = self.request.GET.get('q', None)
+        if query:
+            object_list = Track.objects.filter(
+                Q(title__iregex=query) | Q(album__title__iregex=query) | Q(album__group__title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Track.objects.all()
+
+            return object_list
 
 
 class ShowGroup(DataMixin, HitCountDetailView):
@@ -262,6 +296,19 @@ class ShowGroup(DataMixin, HitCountDetailView):
         context = super().get_context_data(**kwargs)
         context['albums'] = Album.objects.all()
         c_def = self.get_user_context(title=context['group'])
+        return dict(list(context.items()) + list(c_def.items()))
+
+class ShowPlaylist(DataMixin, HitCountDetailView):
+    model = Playlist
+    template_name = 'music/playlist.html'
+
+    count_hit = True
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cache.set('playlist_id', context['playlist'].id)
+        context['albums'] = Album.objects.all()
+        context['groups'] = Group.objects.all()
+        c_def = self.get_user_context(title=context['playlist'])
         return dict(list(context.items()) + list(c_def.items()))
 
 def pageNotFound(request, exception):
@@ -358,6 +405,21 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def add_track_playlist(request, id_playlist, id_track):
+    playlist = Playlist.objects.get(id=id_playlist)
+    track = Track.objects.get(id=id_track)
+    playlist.tracks_list.add(track)
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def delete_track_playlist(request, id_playlist, id_track):
+    playlist = Playlist.objects.get(id=id_playlist)
+    track = Track.objects.get(id=id_track)
+    playlist.tracks_list.remove(track)
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def add_album_user(request, id):
     album = Album.objects.get(id=id)

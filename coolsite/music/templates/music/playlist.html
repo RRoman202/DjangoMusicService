@@ -1,0 +1,41 @@
+{% extends 'music/base.html' %}
+{% load define_tag %}
+{% load music_tags %}
+{% block content %}
+<h1>{{title}}</h1>
+
+<p><img class="img-article-left" src="{{playlist.photo.url}}"></p>
+<a href="{% url 'tracksplaylist' playlist_id=playlist.id %}"><button>Добавить треки</button></a>
+<p><h2>Треки</h2></p>
+<div class="content-block">
+    <ul>
+    {% for p in playlist.tracks_list.all %}
+    <li>
+        <form>
+
+            {% for al in albums %}
+            {% if al.pk == p.album_id %}
+                {% if al.photo %}
+                    <a href="{{p.get_absolute_url}}"><img class="img-article-left-tracks thumb" src="{{al.photo.url}}"></a>
+                {% endif %}
+                {% for g in groups %}
+                    {% if g.pk == al.group_id %}
+                        <p class="geturl"><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
+                        <p class="geturl"><a href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
+            <div class="clear"></div>
+            <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+            <div class="clear"></div>
+            <p class="link-read-post"><a href="/deletetrackplaylist/{{playlist.id}}/{{p.id}}">Удалить из плейлиста</a></p>
+
+        </form>
+
+    </li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}

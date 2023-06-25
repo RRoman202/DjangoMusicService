@@ -18,7 +18,7 @@ class AddGroupForm(forms.ModelForm):
 class AddPlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
-        fields = ['title', 'slug', 'photo']
+        fields = ['title', 'photo']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
         }

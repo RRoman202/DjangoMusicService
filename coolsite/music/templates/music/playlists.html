@@ -18,16 +18,16 @@
             {% if p.photo %}
             {% getphoto urltext=p.photo.url as urlcheck %}
             {% if urlcheck == 'htp' %}
-                <a href=""><img class="img-article-left thumb" src="{{p.photo}}"></a>
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo}}"></a>
             {% else %}
-                <a href=""><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+                <a href="{{ p.get_absolute_url }}"><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
             {% endif %}
             {% endif %}
-            <p><h2><a class="url-text" href="">{{p.title}}</a></h2></p>
+            <p><h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2></p>
 
             <div class="clear"></div>
 
-            <p class="link-read-post"><a  href="">Подробнее</a></p>
+            <p class="link-read-post"><a  href="{{ p.get_absolute_url }}">Подробнее</a></p>
 
             <hr>
         </form>

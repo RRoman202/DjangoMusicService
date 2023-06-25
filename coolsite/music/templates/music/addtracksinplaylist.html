@@ -1,0 +1,52 @@
+{% extends 'music/base.html' %}
+{% load embed_video_tags %}
+
+{% block content %}
+{% if gen_selected == 0 %}
+    <h1>{{title}}</h1>
+{% else %}
+    {% for gen in genres %}
+        {% if gen.pk == gen_selected %}
+            <h1>{{gen.title}}</h1>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<form method="get">
+  <input name="q" class="input-search" type="text" placeholder="Поиск...">
+    <input type="submit" value="Найти" class="input-submit">
+</form>
+<a href="{{ playlist.get_absolute_url }}"><button>Вернуться к плейлисту</button></a>
+<div class="content-block">
+    <ul>
+    {% for p in tracks %}
+    <li>
+        <form>
+
+            {% for al in albums %}
+            {% if al.pk == p.album_id %}
+                {% if al.photo %}
+                    <a href="{{p.get_absolute_url}}"><img class="img-article-left-tracks thumb" src="{{al.photo.url}}"></a>
+                {% endif %}
+                {% for g in groups %}
+                    {% if g.pk == al.group_id %}
+                        <p class="geturl"><a href="{{ g.get_absolute_url }}">{{g.title}}</a></p>
+                        <p class="geturl"><a href="{{ al.get_absolute_url }}">{{al.title}}</a></p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <h2><a class="url-text" href="{{ p.get_absolute_url }}">{{p.title}}</a></h2>
+            <div class="clear"></div>
+            {% if p in playlist.tracks_list.all %}
+                <p class="link-read-post"><a href="/deletetrackplaylist/{{playlist_id}}/{{p.id}}">Удалить из плейлиста</a></p>
+            {% else %}
+                <p class="link-read-post"><a href="/addtrackplaylist/{{playlist_id}}/{{p.id}}">Добавить в плейлист</a></p>
+            {% endif %}
+        </form>
+
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock %}
