@@ -16,7 +16,7 @@ menu = [{'title': "Альбомы", 'url_name': 'home'},
         {'title': "Исполнители", 'url_name': 'groups'},
         {'title': "Рекомендации", 'url_name': 'recs'},
         {'title': "Предсказание", 'url_name': 'pred'},
-        {'title': "Добавить группу", 'url_name': 'addgroup'},
+
 
 ]
 
@@ -27,8 +27,6 @@ class DataMixin:
                 context = kwargs
                 genres = Genre.objects.all()
                 user_menu = menu.copy()
-                if not self.request.user.is_authenticated:
-                        user_menu.pop(5)
                 context['menu'] = user_menu
                 context['genres'] = genres
                 if 'gen_selected' not in context:

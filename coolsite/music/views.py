@@ -48,7 +48,34 @@ class MusicHome(DataMixin, ListView):
 
             return object_list
 
-class ProfileView(DataMixin, TemplateView):
+class PlaylistView(DataMixin, ListView):
+
+    model = Playlist
+    template_name = 'music/playlists.html'
+    context_object_name = 'playlists'
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+
+        c_def = self.get_user_context(title="Мои плейлисты")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+
+        if query:
+            object_list = Playlist.objects.filter(
+                Q(title__iregex=query)
+            )
+            return object_list
+        else:
+            object_list = Playlist.objects.all()
+
+            return object_list
+
+class ProfileView(LoginRequiredMixin, DataMixin, TemplateView):
 
     template_name = 'music/profile.html'
 
@@ -252,8 +279,7 @@ class MusicGenre(DataMixin, ListView):
         g = Genre.objects.get(slug=self.kwargs['genre_slug'])
         context['title'] = str(g.title)
         user_menu = menu.copy()
-        if not self.request.user.is_authenticated:
-            user_menu.pop(5)
+
         context['menu'] = user_menu
         context['gen_selected'] = g.pk
 
@@ -284,6 +310,22 @@ class AddGroup(LoginRequiredMixin, DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Добавление группы')
         return dict(list(context.items()) + list(c_def.items()))
+
+
+class AddPlaylist(LoginRequiredMixin, DataMixin, CreateView):
+    form_class = AddPlaylistForm
+    template_name = 'music/addplaylist.html'
+    success_url = reverse_lazy('prof')
+    login_url = reverse_lazy('prof')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Создание плейлиста')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 class RegisterUser(DataMixin, CreateView):
     form_class = RegisterUserForm
@@ -359,8 +401,7 @@ def handle_uploaded_file(f):
 
 def upload_file(request):
     user_menu = menu.copy()
-    if not request.user.is_authenticated:
-        user_menu.pop(5)
+
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():

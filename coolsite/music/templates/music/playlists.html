@@ -1,0 +1,41 @@
+{% extends 'music/base.html' %}
+{% load define_tag %}
+{% load music_tags %}
+{% block content %}
+<h1>{{title}}</h1>
+<form method="get">
+  <input name="q" class="input-search" type="text" placeholder="Поиск...">
+    <input type="submit" value="Найти" class="input-submit">
+
+</form>
+<ul>
+    {% for p in playlists %}
+      {% if p.user_id == user.id %}
+          <li>
+
+        <form method="post">
+
+            {% if p.photo %}
+            {% getphoto urltext=p.photo.url as urlcheck %}
+            {% if urlcheck == 'htp' %}
+                <a href=""><img class="img-article-left thumb" src="{{p.photo}}"></a>
+            {% else %}
+                <a href=""><img class="img-article-left thumb" src="{{p.photo.url}}"></a>
+            {% endif %}
+            {% endif %}
+            <p><h2><a class="url-text" href="">{{p.title}}</a></h2></p>
+
+            <div class="clear"></div>
+
+            <p class="link-read-post"><a  href="">Подробнее</a></p>
+
+            <hr>
+        </form>
+
+
+      </li>
+      {% endif %}
+
+    {% endfor %}
+</ul>
+{% endblock %}

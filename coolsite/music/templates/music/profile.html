@@ -4,13 +4,14 @@
 <h1>{{title}}</h1>
 <div class="profile-block">
     <div class="profile-img">
-        <img src="https://via.placeholder.com/200">
+        <img src="{{user.photo.url}}">
         <p>{{user.username}}</p>
     </div>
     <div class="profile-info">
         <p>Дата регистрации: <span>{{user.date_joined}}</span></p>
         <p>Электронная почта: <span>{{user.email}}</span></p>
-        <a href="#"><button>Мои плейлисты</button></a>
+        <a href="{% url 'myplaylists' %}"><button>Мои плейлисты</button></a>
+        <a href="{% url 'addplaylist' %}"><button>Создать плейлист</button></a>
     </div>
 </div>
 <div class="albums-container">
