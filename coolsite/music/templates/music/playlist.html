@@ -4,8 +4,15 @@
 {% block content %}
 <h1>{{title}}</h1>
 
-<p><img class="img-article-left" src="{{playlist.photo.url}}"></p>
-<a href="{% url 'tracksplaylist' playlist_id=playlist.id %}"><button>Добавить треки</button></a>
+<div class="playlist-block">
+    <img src="{{playlist.photo.url}}">
+    <div class="playlist-info">
+        <p>Дата создания: <span>{{playlist.time_create}}</span></p>
+        <a href="{% url 'tracksplaylist' playlist_id=playlist.id %}"><button>Добавить треки</button></a>
+    </div>
+
+</div>
+
 <p><h2>Треки</h2></p>
 <div class="content-block">
     <ul>

@@ -10,12 +10,14 @@
 </div>
 
 <h1>{{group.title}}</h1>
-{% if group in user.groups_list.all %}
+{% if user.groups_list %}
+    {% if group in user.groups_list.all %}
 
-    <p class="link-read-post"><a href="/deletegroupuser/{{group.id}}">Убрать из избранных</a></p>
-{% else %}
+        <p class="link-read-post"><a href="/deletegroupuser/{{group.id}}">Убрать из избранных</a></p>
+    {% else %}
 
-    <p class="link-read-post"><a href="/addgroupuser/{{group.id}}">Добавить в избранные</a></p>
+        <p class="link-read-post"><a href="/addgroupuser/{{group.id}}">Добавить в избранные</a></p>
+    {% endif %}
 {% endif %}
 {% if group.photo %}
             {% getphoto urltext=group.photo.url as urlcheck %}

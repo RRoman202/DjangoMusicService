@@ -91,62 +91,6 @@ class ProfileView(LoginRequiredMixin, DataMixin, TemplateView):
 
 
 
-class SearchResultsView(DataMixin, ListView):
-    model = Album
-    template_name = 'music/search_results.html'
-    context_object_name = 'albums'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['groups'] = Group.objects.all()
-
-        c_def = self.get_user_context(title="Альбомы")
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-
-        if query:
-            object_list = Album.objects.filter(
-                Q(title__iregex=query) | Q(group__title__iregex=query)
-            )
-            return object_list
-        else:
-            object_list = Album.objects.all()
-
-            return object_list
-
-class SearchResultsTrackView(DataMixin, ListView):
-    paginate_by = 10
-    model = Track
-    template_name = 'music/search_results_track.html'
-    context_object_name = 'tracks'
-    allow_empty = True
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['albums'] = Album.objects.all()
-        context['groups'] = Group.objects.all()
-
-        c_def = self.get_user_context(title='Все треки')
-
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def form_valid(self, form):
-        return redirect('home')
-
-    def get_queryset(self):
-        query = self.request.GET.get('q', None)
-        if query:
-            object_list = Track.objects.filter(
-                Q(title__iregex=query) | Q(album__title__iregex=query) | Q(album__group__title__iregex=query)
-            )
-            return object_list
-        else:
-            object_list = Track.objects.all()
-
-            return object_list
-
 class MusicRecomendationAlbum(DataMixin, TemplateView):
 
 
@@ -162,8 +106,7 @@ class MusicRecomendationAlbum(DataMixin, TemplateView):
         c_def = self.get_user_context(title="Популярные альбомы")
         return dict(list(context.items()) + list(c_def.items()))
 
-def contact(request):
-    return HttpResponseNotFound('Обратная связь')
+
 
 
 class ShowAlbum(DataMixin, HitCountDetailView):
@@ -347,16 +290,7 @@ class MusicGenre(DataMixin, ListView):
 
             return object_list.filter(genre__slug=self.kwargs['genre_slug'], is_published=True).select_related('genre')
 
-class AddGroup(LoginRequiredMixin, DataMixin, CreateView):
-    form_class = AddGroupForm
-    template_name = 'music/addgroup.html'
-    success_url = reverse_lazy('home')
-    login_url = reverse_lazy('home')
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Добавление группы')
-        return dict(list(context.items()) + list(c_def.items()))
 
 
 class AddPlaylist(LoginRequiredMixin, DataMixin, CreateView):

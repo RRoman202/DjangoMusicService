@@ -829,7 +829,7 @@ hr{
 .albums-container{
    background: #116466;
    z-index: 100;
-
+   margin: 20px;
 
    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.2);
    border-radius: 20px;
@@ -930,3 +930,27 @@ hr{
   .track a:hover {
    background-color: #666;
   }
+.playlist-block{
+   display: flex;
+   flex-direction: row;
+   background: #116466;
+   z-index: 100;
+   color: white;
+   padding: 10px;
+   box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.2);
+   border-radius: 20px;
+}
+.playlist-block img{
+    max-width: 300px;
+}
+.playlist-info{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.albums-info{
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

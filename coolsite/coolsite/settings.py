@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'hitcount',
     'embed_video',
     'users.apps.UsersConfig',
+    'django_extensions',
 
 
 ]
@@ -142,3 +143,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}

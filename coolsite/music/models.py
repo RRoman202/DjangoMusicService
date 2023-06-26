@@ -88,7 +88,7 @@ class Genre(models.Model):
 class Playlist(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото", default=0)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
@@ -103,10 +103,4 @@ class Playlist(models.Model):
 
 
 
-class MusicVideo(models.Model):
-    title = models.CharField(max_length=255)
-    music_Video = EmbedVideoField()
-
-    class Meta:
-        verbose_name_plural = "Видео"
 

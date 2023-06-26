@@ -6,7 +6,7 @@ from typing import List, Tuple, Optional
 import re
 from bs4 import BeautifulSoup as bs
 
-# pip install dpath
+
 import dpath.util
 
 import requests
@@ -89,25 +89,6 @@ def search_youtube(group, text_or_url: str) -> List[Tuple[str, str]]:
 
         items.append((url, title))
         break
-
-        # url = 'https://www.youtube.com/embed/' + video['videoId'] + '?wmode=opaque'
-        # pages = requests.get(url)
-        # soup = bs(pages.text, 'lxml')
-        #
-        # if 'UNPLAYABLE' in str(soup):
-        #     continue
-        # else:
-        #     url = 'https://www.youtube.com/watch?v=' + video['videoId']
-        #     try:
-        #         title = dpath.util.get(video, 'title/runs/0/text')
-        #     except KeyError:
-        #         title = dpath.util.get(video, 'title/simpleText')
-        #
-        #     if(str(title).startswith(group)):
-        #         items.append((url, title))
-        #         break
-        #     else:
-        #         continue
 
     return items[0][0]
 
