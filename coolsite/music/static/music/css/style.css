@@ -954,3 +954,8 @@ hr{
     flex-direction: row;
     justify-content: space-around;
 }
+.btn-cent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
