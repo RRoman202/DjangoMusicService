@@ -1,3 +1,4 @@
+import datetime
 import textwrap
 
 from django.contrib.auth import logout, login
@@ -36,22 +37,47 @@ def pdfview(request, id_album):
     textob.setTextOrigin(inch, inch)
     textob.setFont("Tahoma", 14)
     text = album.description
-    text = textwrap.wrap(text, width=50)
+    text = textwrap.wrap(text, width=70)
     lines = [
         album.title,
         str(album.year),
-
-
-
+        "Дата создания документа: " + str(datetime.datetime.now()),
     ]
-    for t in text:
-        lines.append(t)
     for line in lines:
         textob.textLine(line)
 
     c.drawText(textob)
+
     c.showPage()
-    c.showPage()
+
+    lendesc = len(text)
+    for i in range((len(text) // 41) + 1):
+        textdesc = c.beginText()
+        textdesc.setTextOrigin(inch, inch)
+        textdesc.setFont("Tahoma", 14)
+        linedesc = []
+
+
+        if(i > 0):
+            j = i * 41
+        else:
+            j = 0
+
+        if lendesc - 41 < 0:
+            while j < len(text):
+                linedesc.append(text[j])
+                j += 1
+        else:
+            while j < (i + 1) * 41:
+                linedesc.append(text[j])
+                j += 1
+
+        for line in linedesc:
+            textdesc.textLine(line)
+        c.drawText(textdesc)
+        c.showPage()
+        lendesc = lendesc - 41
+
     c.save()
     buf.seek(0)
 
@@ -61,25 +87,52 @@ def pdfview(request, id_album):
 def pdfview_group(request, id_group):
     pdfmetrics.registerFont(TTFont('Tahoma', 'Tahoma.ttf'))
 
-    album = Group.objects.get(id=id_group)
+    group = Group.objects.get(id=id_group)
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
     textob = c.beginText()
     textob.setTextOrigin(inch, inch)
     textob.setFont("Tahoma", 14)
-    text = album.description
-    text = textwrap.wrap(text, width=50)
+    text = group.description
+    text = textwrap.wrap(text, width=70)
     lines = [
-        album.title,
+        group.title,
+        "Дата создания документа: " + str(datetime.datetime.now()),
     ]
-    for t in text:
-        lines.append(t)
     for line in lines:
         textob.textLine(line)
 
     c.drawText(textob)
+
     c.showPage()
-    c.showPage()
+
+    lendesc = len(text)
+    for i in range((len(text) // 41) + 1):
+        textdesc = c.beginText()
+        textdesc.setTextOrigin(inch, inch)
+        textdesc.setFont("Tahoma", 14)
+        linedesc = []
+
+        if (i > 0):
+            j = i * 41
+        else:
+            j = 0
+
+        if lendesc - 41 < 0:
+            while j < len(text):
+                linedesc.append(text[j])
+                j += 1
+        else:
+            while j < (i + 1) * 41:
+                linedesc.append(text[j])
+                j += 1
+
+        for line in linedesc:
+            textdesc.textLine(line)
+        c.drawText(textdesc)
+        c.showPage()
+        lendesc = lendesc - 41
+
     c.save()
     buf.seek(0)
 
