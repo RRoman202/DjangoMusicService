@@ -959,3 +959,12 @@ hr{
     flex-direction: row;
     justify-content: space-around;
 }
+.btnpdf{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.btnpdf p{
+    margin: 10px;
+    margin-top: 20px;
+}

@@ -22,7 +22,8 @@
 <div class="info-block">
     <h1>{{album.title}}<span>(</span><span>{{album.year}}</span><span>)</span><span>  </span><span><a class="url-text" href="{{ album.group.get_absolute_url }}">{{album.group.title}}</a></span></h1>
 </div>
-{% if user.albums_list %}
+<div class="btnpdf">
+    {% if user.albums_list %}
     {% if album in user.albums_list.all %}
 
         <p class="link-read-post"><a href="/deletealbumuser/{{album.id}}">Убрать из избранных</a></p>
@@ -30,7 +31,10 @@
 
         <p class="link-read-post"><a href="/addalbumuser/{{album.id}}">Добавить в избранные</a></p>
     {% endif %}
-{% endif %}
+    {% endif %}
+    <p class="link-read-post"><a href="{% url 'pdfview' id_album=album.id %}">Скачать pdf</a></p>
+</div>
+
 <button class="video-hide-btn" id="hider-button" onclick="myFunction()">Скрыть видео</button>
 <div class="embedded-video" id="video-block">
 

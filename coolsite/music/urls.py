@@ -29,4 +29,6 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='prof'),
     path('myplaylists/', PlaylistView.as_view(), name='myplaylists'),
     path('playlist/<int:pk>/', ShowPlaylist.as_view(), name='playlist'),
+    path('pdf/<int:id_album>/', pdfview, name='pdfview'),
+    path('pdfgroup/<int:id_group>/', pdfview_group, name='pdfviewgroup'),
 ]

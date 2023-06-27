@@ -10,7 +10,8 @@
 </div>
 
 <h1>{{group.title}}</h1>
-{% if user.groups_list %}
+<div class="btnpdf">
+    {% if user.groups_list %}
     {% if group in user.groups_list.all %}
 
         <p class="link-read-post"><a href="/deletegroupuser/{{group.id}}">Убрать из избранных</a></p>
@@ -18,7 +19,11 @@
 
         <p class="link-read-post"><a href="/addgroupuser/{{group.id}}">Добавить в избранные</a></p>
     {% endif %}
-{% endif %}
+    {% endif %}
+
+    <p class="link-read-post"><a href="{% url 'pdfviewgroup' id_group=group.id %}">Скачать pdf</a></p>
+</div>
+
 {% if group.photo %}
             {% getphoto urltext=group.photo.url as urlcheck %}
             {% if urlcheck == 'htp' %}

@@ -1,3 +1,5 @@
+import textwrap
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -9,17 +11,79 @@ from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.core.cache import cache
 from hitcount.views import HitCountDetailView
 from hitcount.models import *
-
+import io
+from reportlab.pdfgen import canvas
+from django.http import FileResponse
 from .forms import *
 from .models import *
 from .utils import *
 from django.db.models import Q
 import joblib
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
 
 from django.http import JsonResponse
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+def pdfview(request, id_album):
+    pdfmetrics.registerFont(TTFont('Tahoma', 'Tahoma.ttf'))
+
+    album = Album.objects.get(id=id_album)
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Tahoma", 14)
+    text = album.description
+    text = textwrap.wrap(text, width=50)
+    lines = [
+        album.title,
+        str(album.year),
 
 
 
+    ]
+    for t in text:
+        lines.append(t)
+    for line in lines:
+        textob.textLine(line)
+
+    c.drawText(textob)
+    c.showPage()
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='pdf_album.pdf')
+
+
+def pdfview_group(request, id_group):
+    pdfmetrics.registerFont(TTFont('Tahoma', 'Tahoma.ttf'))
+
+    album = Group.objects.get(id=id_group)
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Tahoma", 14)
+    text = album.description
+    text = textwrap.wrap(text, width=50)
+    lines = [
+        album.title,
+    ]
+    for t in text:
+        lines.append(t)
+    for line in lines:
+        textob.textLine(line)
+
+    c.drawText(textob)
+    c.showPage()
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='pdf_group.pdf')
 
 class MusicHome(DataMixin, ListView):
 
