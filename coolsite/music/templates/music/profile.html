@@ -5,9 +5,10 @@
 <div class="profile-block">
     <div class="profile-img">
         <img src="{{user.photo.url}}">
-        <p>{{user.username}}</p>
+
     </div>
     <div class="profile-info">
+        <h2>{{user.username}}</h2>
         <p>Дата регистрации: <span>{{user.date_joined}}</span></p>
         <p>Электронная почта: <span>{{user.email}}</span></p>
         <a href="{% url 'myplaylists' %}"><button>Мои плейлисты</button></a>
